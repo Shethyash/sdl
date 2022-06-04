@@ -1,0 +1,52 @@
+# Final Project
+
+### Quick Start
+
+To get this project up and running locally on your computer follow the following steps.
+
+1. Clone Project Repository
+2. go to project folder
+3. Set up a python virtual environment
+4. create .env file in project directory
+5. Run the following commands
+   - pip install -r requirements.txt
+   - python manage.py makemigrations
+   - python manage.py migrate
+   - python manage.py createsuperuser
+   - python manage.py runserver 0:8000
+6. Open a browser and go to http://localhost:8000/
+
+# commands
+
+- create new virtual environment
+  - python -m venv env
+- activate/deactivate environment
+  - env\Scripts\Activate.ps1
+  - source my_env/bin/activate
+  - deactivate
+- txt file for version
+  - python -m pip freeze > requirements.txt
+- start project
+  - python manage.py startapp name
+
+# mongo db
+
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+
+- python manage.py makemigrations
+- python manage.py migrate
+- start mongo server : sudo systemctl start mongod
+- mongo
+- use iot_db
+
+# CronJob
+
+https://gutsytechster.wordpress.com/2019/06/24/how-to-setup-a-cron-job-in-django/
+
+- add cron jobs : python manage.py crontab add
+- active cron job list : python manage.py crontab show
+- remove cron job : python manage.py crontab remove
+
+# Project
+
+- https://dev.to/earthcomfy/creating-a-django-registration-login-app-part-i-1di5
