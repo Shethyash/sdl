@@ -16,6 +16,8 @@ To get this project up and running locally on your computer follow the following
    - python manage.py runserver 0:8000
 6. Open a browser and go to http://localhost:8000/
 
+![project_structure](https://user-images.githubusercontent.com/25881570/172018369-7c8167d6-cf4e-487b-8e9d-3a1fc51d4e63.png)
+
 ### commands
 
 - create new virtual environment
