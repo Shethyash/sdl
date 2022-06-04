@@ -1,6 +1,6 @@
-# Final Project
+# SDL Project
 
-### Quick Start
+## Quick Start
 
 To get this project up and running locally on your computer follow the following steps.
 
@@ -16,7 +16,7 @@ To get this project up and running locally on your computer follow the following
    - python manage.py runserver 0:8000
 6. Open a browser and go to http://localhost:8000/
 
-# commands
+### commands
 
 - create new virtual environment
   - python -m venv env
@@ -25,11 +25,11 @@ To get this project up and running locally on your computer follow the following
   - source my_env/bin/activate
   - deactivate
 - txt file for version
-  - python -m pip freeze > requirements.txt
+  - pip freeze > requirements.txt
 - start project
   - python manage.py startapp name
 
-# mongo db
+### mongo db
 
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
 
@@ -39,7 +39,7 @@ https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
 - mongo
 - use iot_db
 
-# CronJob
+### CronJob
 
 https://gutsytechster.wordpress.com/2019/06/24/how-to-setup-a-cron-job-in-django/
 
@@ -47,6 +47,6 @@ https://gutsytechster.wordpress.com/2019/06/24/how-to-setup-a-cron-job-in-django
 - active cron job list : python manage.py crontab show
 - remove cron job : python manage.py crontab remove
 
-# Project
+### Help tutorials
 
 - https://dev.to/earthcomfy/creating-a-django-registration-login-app-part-i-1di5
