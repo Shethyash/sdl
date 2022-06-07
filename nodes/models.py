@@ -14,6 +14,9 @@ class Nodes(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 
+    def __str__(self):
+        return self.name
+
 
 class Feeds(models.Model):
     node_id = models.IntegerField()
@@ -24,3 +27,6 @@ class Feeds(models.Model):
     soil_moisture = models.FloatField(null=True)
     battery_status = models.FloatField(null=True)
     created_at = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return self.node_id

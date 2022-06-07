@@ -1,16 +1,20 @@
+from django.views.generic.list import ListView
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from csv import DictWriter
 import json
-from .models import Nodes, Feeds
+from nodes.models import Nodes, Feeds
+from .forms import RegisterForm
 from django.http import HttpResponse
+from django.views import View
 # Create your views here.
 
 
+@login_required
 @csrf_exempt
 def store_feeds(request):
-
     if request.method == "POST":
         # store data to db
         body_unicode = request.body.decode('utf-8')
@@ -31,41 +35,48 @@ def store_feeds(request):
     return HttpResponse()
 
 
-def get_feeds(request):
-    if request.method == "GET":
-        id = request.GET.get("id")
-        data = Feeds.objects.filter(node_id=id)
-        return render(request, 'get_feeds.html', {'data': data})
+@login_required
+def get_feeds(request, id):
+    data = Feeds.objects.filter(node_id=id)
+    return render(request, 'nodes/get_feeds.html', {'data': data})
 
 
-def node(request):
+@login_required
+def list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
     return render(request, 'nodes/list.html', {'data': data})
 
 
-def nodereg(request):
-    if request.method == "POST":
-        Name = request.POST.get('name')
-        Status = request.POST.get('status')
-        Description = request.POST.get('desc')
-        Latitude = request.POST.get('latitude')
-        Longitude = request.POST.get('longitude')
+class CrudNodes(View):
+    form_class = RegisterForm
+    template_name = 'nodes/register.html'
 
-        node_data = Nodes(
-            name=Name,
-            user_id=request.user.id,
-            status=Status,
-            description=Description,
-            latitude=Latitude,
-            longitude=Longitude
-        )
-        node_data.save()
-        return redirect('/nodes')
+    def dispatch(self, request, *args, **kwargs):
+        # will redirect to the home page if a user tries to access the register page while logged in
+        if not request.user.is_authenticated:
+            return redirect(to='/')
 
-    return render(request, 'nodes/reg_node.html')
+        # else process dispatch as it otherwise normally would
+        return super(CrudNodes, self).dispatch(request, *args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        id = request.GET.get("id", None)
+        if id:
+            data = Nodes.objects.get(id=id)
+            form = self.form_class(instance=data)
+        else:
+            form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
-def edit_node(request):
-    id = request.GET.get("id")
-    data = Nodes.objects.get(id=id)
-    return render(request, 'nodes/reg_node.html', {'data': data})
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            node = form.save(commit=False)
+            node.user_id = request.user.id
+            node.save()
+
+            messages.success(request, f'Node created successfully')
+            return redirect(to='nodes')
+
+        return render(request, self.template_name, {'form': form})

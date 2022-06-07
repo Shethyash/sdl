@@ -20,17 +20,14 @@
     <td>{{val.longitude}}</td>
     <td>
       <a
-        href="/get_feeds?id={{val.id}}"
+        href="get_feeds/{{val.id}}"
         class="btn btn-primary"
         style="float: right"
         >show Feeds</a
       >
     </td>
     <td>
-      <a
-        href="/node_edit?id={{val.id}}"
-        class="btn btn-primary"
-        style="float: right"
+      <a href="crud?id={{val.id}}" class="btn btn-primary" style="float: right"
         >Edit</a
       >
     </td>
@@ -43,5 +40,5 @@
   {% endfor %}
 </table>
 
-<a href="/nodereg" class="btn btn-primary" style="float: right">Add Nodes</a>
+<a href="crud" class="btn btn-primary" style="float: right">Add Nodes</a>
 {% endblock content %}

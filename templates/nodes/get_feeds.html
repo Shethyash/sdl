@@ -1,0 +1,32 @@
+{% extends "../base.html" %} {%block title %}Nodes {% endblock title%}-----
+{%block content %}
+
+<h1>List of Value</h1>
+<table class="table table-striped">
+  <th>Node Id</th>
+  <th>Temprature</th>
+  <th>Humidity</th>
+  <th>LWS</th>
+  <th>Soil Temprature</th>
+  <th>Soil Moisture</th>
+  <th>Battery Status</th>
+  <th>Created At</th>
+  {% for val in data %}
+  <tr>
+    <td>{{val.node_id}}</td>
+    <td>{{val.temprature}}</td>
+    <td>{{val.humidity}}</td>
+    <td>{{val.LWS}}</td>
+    <td>{{val.soil_temprature}}</td>
+    <td>{{val.soil_moisture}}</td>
+    <td>{{val.battery_status}}</td>
+    <td>{{val.created_at}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %} {% block script %}
+<script>
+  console.log("hello");
+</script>
+{% endblock script %}

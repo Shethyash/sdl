@@ -23,7 +23,7 @@ To get this project up and running locally on your computer follow the following
 - create new virtual environment
   - python -m venv env
 - activate/deactivate environment
-  - env\Scripts\Activate.ps1
+  - env\Scripts\Activate
   - source my_env/bin/activate
   - deactivate
 - txt file for version
