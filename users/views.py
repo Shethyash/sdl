@@ -1,3 +1,6 @@
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.models import User
+from django.utils.encoding import force_str, force_bytes
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
@@ -6,6 +9,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
+from .token import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
 def home(request):
@@ -33,10 +41,30 @@ class RegisterView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            form.save()
+            # form.save()
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
 
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}')
+            # email verification
+            to_list = [
+                '202111046@daiict.ac.in'] if settings.Debug else [user.email]
+            current_site = get_current_site(request)
+            email_subject = 'Activate your account'
+            msg = render_to_string('emails/acc_active_email.html', {
+                'name': user.first_name,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+
+            email = EmailMessage(email_subject, msg,
+                                 settings.EMAIL_HOST_USER, to=to_list)
+            email.fail_silently = True
+            email.send()
+            messages.success(
+                request, f'Account created for {username}, We have sent you an email to verify your account')
 
             return redirect(to='login')
 
@@ -95,3 +123,19 @@ def profile(request):
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
     return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Your account has been verified')
+        return redirect(to='login')
+    else:
+        messages.error(request, 'The link is invalid')
+        return redirect(to='login')

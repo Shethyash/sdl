@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from .views import home, profile, RegisterView, CustomLoginView, ResetPasswordView, ChangePasswordView
 from .forms import LoginForm
+from users import views
 
 urlpatterns = [
     path('', home, name='users-home'),
@@ -32,5 +33,6 @@ urlpatterns = [
 
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
     path('profile/', profile, name='users-profile'),
+    path('activate/<uidb64>/<token>', views.activate, name='activate'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

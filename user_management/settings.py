@@ -92,7 +92,7 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'iot_db',
+        'NAME': 'sdl_db',
     }
 }
 
