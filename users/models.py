@@ -1,6 +1,6 @@
-from django.db import models
-from django.contrib.auth.models import User
 from PIL import Image
+from django.contrib.auth.models import User
+from django.db import models
 
 
 # Extending User Model Using a One-To-One Link

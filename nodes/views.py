@@ -1,14 +1,16 @@
-from django.views.generic.list import ListView
-from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from csv import DictWriter
 import json
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+
 from nodes.models import Nodes, Feeds
 from .forms import RegisterForm
-from django.http import HttpResponse
-from django.views import View
+
+
 # Create your views here.
 
 
@@ -19,7 +21,7 @@ def store_feeds(request):
         # store data to db
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        print(json.dumps(body))
+        # print(json.dumps(body))
         f_data = Feeds(
             node_id=body['node_id'],
             temperature=body['temperature'],
@@ -36,13 +38,13 @@ def store_feeds(request):
 
 
 @login_required
-def get_feeds(request, id):
-    data = Feeds.objects.filter(node_id=id)
+def get_feeds(request, node_id):
+    data = Feeds.objects.filter(node_id=node_id)
     return render(request, 'nodes/get_feeds.html', {'data': data})
 
 
 @login_required
-def list(request):
+def node_list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
     return render(request, 'nodes/list.html', {'data': data})
 
@@ -60,9 +62,9 @@ class CrudNodes(View):
         return super(CrudNodes, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        id = request.GET.get("id", None)
-        if id:
-            data = Nodes.objects.get(id=id)
+        node_id = request.GET.get("id", None)
+        if node_id:
+            data = Nodes.objects.get(id=node_id)
             form = self.form_class(instance=data)
         else:
             form = self.form_class()

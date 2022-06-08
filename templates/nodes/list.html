@@ -1,44 +1,45 @@
-{% extends "../base.html" %} {%block title %} Nodes {% endblock title%}--------
-{%block content %}
+{% extends "base.html" %}
+{% block title %} Nodes {% endblock title %}
+{% block content %}
 
-<h1>List of Node</h1>
-<table class="table table-striped">
-  <th>name</th>
-  <th>status</th>
-  <th>description</th>
-  <th>latitude</th>
-  <th>longitude</th>
-  <th></th>
-  <th></th>
-  <th></th>
-  {% for val in data %}
-  <tr>
-    <td>{{val.name}}</td>
-    <td>{{val.status}}</td>
-    <td>{{val.description}}</td>
-    <td>{{val.latitude}}</td>
-    <td>{{val.longitude}}</td>
-    <td>
-      <a
-        href="get_feeds/{{val.id}}"
-        class="btn btn-primary"
-        style="float: right"
-        >show Feeds</a
-      >
-    </td>
-    <td>
-      <a href="crud?id={{val.id}}" class="btn btn-primary" style="float: right"
-        >Edit</a
-      >
-    </td>
-    <td>
-      <button onclick="" class="btn btn-primary" style="float: right">
-        Delete
-      </button>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+  <h1>List of Node</h1>
+  <table class="table table-striped">
+    <th>name</th>
+    <th>status</th>
+    <th>description</th>
+    <th>latitude</th>
+    <th>longitude</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    {% for val in data %}
+      <tr>
+        <td>{{ val.name }}</td>
+        <td>{{ val.status }}</td>
+        <td>{{ val.description }}</td>
+        <td>{{ val.latitude }}</td>
+        <td>{{ val.longitude }}</td>
+        <td>
+          <a
+              href="get_feeds/{{ val.id }}"
+              class="btn btn-primary"
+              style="float: right"
+          >show Feeds</a
+          >
+        </td>
+        <td>
+          <a href="crud?id={{ val.id }}" class="btn btn-primary" style="float: right"
+          >Edit</a
+          >
+        </td>
+        <td>
+          <button onclick="" class="btn btn-primary" style="float: right">
+            Delete
+          </button>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
 
-<a href="crud" class="btn btn-primary" style="float: right">Add Nodes</a>
+  <a href="crud" class="btn btn-primary" style="float: right">Add Nodes</a>
 {% endblock content %}

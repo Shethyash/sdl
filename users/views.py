@@ -1,19 +1,20 @@
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth.models import User
-from django.utils.encoding import force_str, force_bytes
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views import View
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
-from .token import account_activation_token
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.conf import settings
+from django.urls import reverse_lazy
+from django.utils.encoding import force_str, force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import View
+
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
+from .token import account_activation_token
 
 
 def home(request):
@@ -71,7 +72,7 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-# Class based view that extends from the built in login view to add a remember me functionality
+# Class based view that extends from the built-in login view to add remember me functionality
 class CustomLoginView(LoginView):
     form_class = LoginForm
 
