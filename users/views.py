@@ -140,3 +140,8 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'The link is invalid')
         return redirect(to='login')
+
+
+def get_all_users(request):
+    users = User.objects.all()
+    return render(request, 'users/all_users.html', {'users': users})

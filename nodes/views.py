@@ -14,7 +14,6 @@ from .forms import RegisterForm
 # Create your views here.
 
 
-# @login_required
 @csrf_exempt
 def store_feeds(request):
     if request.method == "POST":
