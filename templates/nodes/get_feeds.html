@@ -4,286 +4,248 @@
 
 
 {% block content %}
-<h1>List of Value</h1>
-<!--<table class="table table-striped">-->
-<!--  <th>Node Id</th>-->
-<!--  <th>Temperature</th>-->
-<!--  <th>Humidity</th>-->
-<!--  <th>LWS</th>-->
-<!--  <th>Soil Temperature</th>-->
-<!--  <th>Soil Moisture</th>-->
-<!--  <th>Battery Status</th>-->
-<!--  <th>Created At</th>-->
-<!--  {% for val in data %}-->
-<!--  <tr>-->
-<!--    <td>{{ val.node_id }}</td>-->
-<!--    <td>{{ val.temperature }}</td>-->
-<!--    <td>{{ val.humidity }}</td>-->
-<!--    <td>{{ val.LWS }}</td>-->
-<!--    <td>{{ val.soil_temperature }}</td>-->
-<!--    <td>{{ val.soil_moisture }}</td>-->
-<!--    <td>{{ val.battery_status }}</td>-->
-<!--    <td>{{ val.created_at }}</td>-->
-<!--  </tr>-->
-<!--  {% endfor %}-->
-<!--</table>-->
+  <h1>List of Value</h1>
+  <!--<table class="table table-striped">-->
+  <!--  <th>Node Id</th>-->
+  <!--  <th>Temperature</th>-->
+  <!--  <th>Humidity</th>-->
+  <!--  <th>LWS</th>-->
+  <!--  <th>Soil Temperature</th>-->
+  <!--  <th>Soil Moisture</th>-->
+  <!--  <th>Battery Status</th>-->
+  <!--  <th>Created At</th>-->
+  <!--  {% for val in data %}-->
+    <!--  <tr>-->
+    <!--    <td>{{ val.node_id }}</td>-->
+    <!--    <td>{{ val.temperature }}</td>-->
+    <!--    <td>{{ val.humidity }}</td>-->
+    <!--    <td>{{ val.LWS }}</td>-->
+    <!--    <td>{{ val.soil_temperature }}</td>-->
+    <!--    <td>{{ val.soil_moisture }}</td>-->
+    <!--    <td>{{ val.battery_status }}</td>-->
+    <!--    <td>{{ val.created_at }}</td>-->
+    <!--  </tr>-->
+    <!--  {% endfor %}-->
+  <!--</table>-->
 
 
-<div class="dvContainer">
-  <table style="width:95%;height:95%; ">
-    <tr>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas1" style="position: relative;height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart1" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas2" style="position: relative;
+  <div class="dvContainer">
+    <table style="width:95%;height:95%; ">
+      <tr>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas1" style="position: relative;height: 100%;width: 100%;background-color:white;">
+            <canvas id="myChart1" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas2" style="position: relative;
   height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart2" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas3" style="position:relative;
+            <canvas id="myChart2" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas3" style="position:relative;
   display:inline-block; height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart3" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas4" style="position: relative;float:right;
+            <canvas id="myChart3" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas4" style="position: relative;float:right;
   height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart4" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas5" style="position:relative;
+            <canvas id="myChart4" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas5" style="position:relative;
   display:inline-block; height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart5" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-      <td style="width:50%;text-align:center">
-        <div class="MyCanvas6" style="position:relative;
+            <canvas id="myChart5" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+        <td style="width:50%;text-align:center">
+          <div class="MyCanvas6" style="position:relative;
   display:inline-block; height: 100%;width: 100%;background-color:white;">
-          <canvas id="myChart6" style="width:auto;height:auto">CanVas
-          </canvas>
-        </div>
-      </td>
-    </tr>
-  </table>
+            <canvas id="myChart6" style="width:auto;height:auto">CanVas
+            </canvas>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-</div>
-
-
-<script>
-<!--bind this script into separate js file-->
-const ctx1 = document.getElementById('myChart1').getContext('2d');
-const ctx2 = document.getElementById('myChart2').getContext('2d');
-const ctx3 = document.getElementById('myChart3').getContext('2d');
-const ctx4 = document.getElementById('myChart4').getContext('2d');
-const ctx5 = document.getElementById('myChart5').getContext('2d');
-const ctx6 = document.getElementById('myChart6').getContext('2d');
-
-var graphdata1 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'temparature',
-            data: [{% for val in data %}{{ val.temperature }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(251, 9, 9, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-var graphdata2 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'humidity',
-            data: [{% for val in data %}{{ val.humidity }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(56, 223, 34, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-var graphdata3 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'LWS',
-            data: [{% for val in data %}{{ val.LWS }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(249, 249, 2, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-var graphdata4 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'soil_temperature',
-            data: [{% for val in data %}{{ val.soil_temperature }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(255, 74, 250, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-var graphdata5 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'soil_moisture',
-            data: [{% for val in data %}{{ val.soil_moisture }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(255, 74, 250, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-var graphdata6 =  {
-    type: 'line',
-    data: {
-        labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
-        datasets: [{
-            label: 'battery_status',
-            data: [{% for val in data %}{{ val.battery_status }},{% endfor %}],
-<!--            backgroundColor: [-->
-<!--                'rgba(251, 9, 9, 0.8)',-->
-<!--            ],-->
-            borderColor: [
-                'blue',
-
-            ],
-            borderWidth: 3
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-const myChart1 = new Chart(ctx1,graphdata1);
-const myChart2 = new Chart(ctx2,graphdata2);
-const myChart3 = new Chart(ctx3,graphdata3);
-const myChart4 = new Chart(ctx4,graphdata4);
-const myChart5 = new Chart(ctx5,graphdata5);
-const myChart6 = new Chart(ctx6,graphdata6);
+  </div>
 
 
-var newgraphdata1 = graphdata1.data.datasets[0].data;
-var newgraphdata2 = graphdata2.data.datasets[0].data;
-var newgraphdata3 = graphdata3.data.datasets[0].data;
-var newgraphdata4 = graphdata4.data.datasets[0].data;
-var newgraphdata5 = graphdata5.data.datasets[0].data;
-var newgraphdata6 = graphdata6.data.datasets[0].data;
+  <script>
+      {#bind this script into separate js file#}
+      const ctx1 = document.getElementById('myChart1').getContext('2d');
+      const ctx2 = document.getElementById('myChart2').getContext('2d');
+      const ctx3 = document.getElementById('myChart3').getContext('2d');
+      const ctx4 = document.getElementById('myChart4').getContext('2d');
+      const ctx5 = document.getElementById('myChart5').getContext('2d');
+      const ctx6 = document.getElementById('myChart6').getContext('2d');
 
-newgraphdata1.shift();
-newgraphdata1.push();
+      var graph_data1 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'temparature',
+                  data: [{% for val in data %}{{ val.temperature }}, {% endfor %}],
+                  {#backgroundColor: ['rgba(251, 9, 9, 0.8)',],#}
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
 
-newgraphdata2.shift();
-newgraphdata2.push();
+      var graph_data2 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'humidity',
+                  data: [{% for val in data %}{{ val.humidity }}, {% endfor %}],
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
 
-newgraphdata3.shift();
-newgraphdata3.push();
+      var graph_data3 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'LWS',
+                  data: [{% for val in data %}{{ val.LWS }}, {% endfor %}],
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
 
-newgraphdata4.shift();
-newgraphdata4.push();
+      var graph_data4 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'soil_temperature',
+                  data: [{% for val in data %}{{ val.soil_temperature }}, {% endfor %}],
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
 
-newgraphdata5.shift();
-newgraphdata5.push();
+      var graph_data5 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'soil_moisture',
+                  data: [{% for val in data %}{{ val.soil_moisture }}, {% endfor %}],
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
 
-newgraphdata6.shift();
-newgraphdata6.push();
+      var graph_data6 = {
+          type: 'line',
+          data: {
+              labels: [{% for val in data %}'{{ val.created_at }}',{% endfor %}],
+              datasets: [{
+                  label: 'battery_status',
+                  data: [{% for val in data %}{{ val.battery_status }}, {% endfor %}],
+                  borderColor: ['blue',],
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
+
+      const myChart1 = new Chart(ctx1, graph_data1);
+      const myChart2 = new Chart(ctx2, graph_data2);
+      const myChart3 = new Chart(ctx3, graph_data3);
+      const myChart4 = new Chart(ctx4, graph_data4);
+      const myChart5 = new Chart(ctx5, graph_data5);
+      const myChart6 = new Chart(ctx6, graph_data6);
 
 
+      var newgraphdata1 = graph_data1.data.datasets[0].data;
+      var newgraphdata2 = graph_data2.data.datasets[0].data;
+      var newgraphdata3 = graph_data3.data.datasets[0].data;
+      var newgraphdata4 = graph_data4.data.datasets[0].data;
+      var newgraphdata5 = graph_data5.data.datasets[0].data;
+      var newgraphdata6 = graph_data6.data.datasets[0].data;
 
+      newgraphdata1.shift();
+      newgraphdata1.push();
 
-</script>
+      newgraphdata2.shift();
+      newgraphdata2.push();
+
+      newgraphdata3.shift();
+      newgraphdata3.push();
+
+      newgraphdata4.shift();
+      newgraphdata4.push();
+
+      newgraphdata5.shift();
+      newgraphdata5.push();
+
+      newgraphdata6.shift();
+      newgraphdata6.push();
+
+  </script>
 {% endblock content %}
 

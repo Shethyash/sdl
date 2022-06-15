@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 {% block title %} Nodes {% endblock title %}
 {% block content %}
+  <div class="row">
+    <div class="col-6">
+      <h2>List of Node</h2>
+    </div>
+    <div class="col-6">
+      <a href="crud" class="btn btn-primary float-right">Add Nodes</a>
+    </div>
+  </div>
 
-  <h1>List of Node</h1>
   <table class="table table-striped">
     <th>name</th>
     <th>status</th>
@@ -40,6 +47,4 @@
       </tr>
     {% endfor %}
   </table>
-
-  <a href="crud" class="btn btn-primary" style="float: right">Add Nodes</a>
 {% endblock content %}
