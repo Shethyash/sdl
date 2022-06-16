@@ -3,10 +3,12 @@
 {% block content %}
   <div class="row">
     <div class="col-6">
-      <h2>List of Node</h2>
+      <h3>List of Node</h3>
     </div>
     <div class="col-6">
-      <a href="crud" class="btn btn-primary float-right">Add Nodes</a>
+      <a href="crud" class="btn btn-info float-right">
+        <span><i class="fa-solid fa-circle-plus"></i></span>
+      </a>
     </div>
   </div>
 
@@ -18,7 +20,6 @@
     <th>longitude</th>
     <th></th>
     <th></th>
-    <th></th>
     {% for val in data %}
       <tr>
         <td>{{ val.name }}</td>
@@ -27,22 +28,21 @@
         <td>{{ val.latitude }}</td>
         <td>{{ val.longitude }}</td>
         <td>
-          <a
+          <at
               href="get_feeds/{{ val.id }}"
               class="btn btn-primary"
               style="float: right"
-          >show Feeds</a
           >
+            show Feeds
+          </at>
         </td>
         <td>
-          <a href="crud?id={{ val.id }}" class="btn btn-primary" style="float: right"
-          >Edit</a
-          >
-        </td>
-        <td>
-          <button onclick="" class="btn btn-primary" style="float: right">
-            Delete
-          </button>
+          <a href="crud?id={{ val.id }}" class="btn btn-primary">
+            <i class="fa-solid fa-pen"></i>
+          </a>
+          <a class="btn btn-danger">
+            <i class="fa-solid fa-trash-can"></i>
+          </a>
         </td>
       </tr>
     {% endfor %}
