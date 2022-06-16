@@ -3,7 +3,7 @@
 {% block content %}
   <div class="row">
     <div class="col-6">
-      <h3>List of Node</h3>
+      <h3>Nodes</h3>
     </div>
     <div class="col-6">
       <a href="crud" class="btn btn-info float-right">
@@ -12,39 +12,35 @@
     </div>
   </div>
 
-  <table class="table table-striped">
-    <th>name</th>
-    <th>status</th>
-    <th>description</th>
-    <th>latitude</th>
-    <th>longitude</th>
-    <th></th>
-    <th></th>
+  <div class="card-deck mt-3">
     {% for val in data %}
-      <tr>
-        <td>{{ val.name }}</td>
-        <td>{{ val.status }}</td>
-        <td>{{ val.description }}</td>
-        <td>{{ val.latitude }}</td>
-        <td>{{ val.longitude }}</td>
-        <td>
-          <at
-              href="get_feeds/{{ val.id }}"
-              class="btn btn-primary"
-              style="float: right"
-          >
+      <div class="card" style="width: 18rem; margin: 10px">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ val.name }}
+            {% if val.status %}
+              <i class="fa-solid fa-circle" style="color: green"></i>
+            {% else %}
+              <i class="fa-solid fa-circle" style="color: red"></i>
+            {% endif %}
+          </h5>
+          <p class=" card-text">{{ val.description }}</p>
+          <p class=" card-text">Latitude : {{ val.latitude }}</p>
+          <p class=" card-text">Longitude : {{ val.longitude }}</p>
+        </div>
+        <div class="card-footer">
+          <a href="get_feeds/{{ val.id }}" class="btn btn-primary">
             show Feeds
-          </at>
-        </td>
-        <td>
+          </a>
           <a href="crud?id={{ val.id }}" class="btn btn-primary">
             <i class="fa-solid fa-pen"></i>
           </a>
           <a class="btn btn-danger">
             <i class="fa-solid fa-trash-can"></i>
           </a>
-        </td>
-      </tr>
+        </div>
+      </div>
     {% endfor %}
-  </table>
+  </div>
+
 {% endblock content %}
