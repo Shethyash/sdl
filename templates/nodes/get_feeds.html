@@ -4,56 +4,48 @@
 
 
 {% block content %}
-  <div class="dvContainer">
-    <table style="width:95%;height:95%; ">
-      <tr>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas1" style="position: relative;height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart1" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas2" style="position: relative;
-  height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart2" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas3" style="position:relative;
-  display:inline-block; height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart3" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas4" style="position: relative;float:right;
-  height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart4" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas5" style="position:relative;
-  display:inline-block; height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart5" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-        <td style="width:50%;text-align:center">
-          <div class="MyCanvas6" style="position:relative;
-  display:inline-block; height: 100%;width: 100%;background-color:white;">
-            <canvas id="myChart6" style="width:auto;height:auto">CanVas
-            </canvas>
-          </div>
-        </td>
-      </tr>
-    </table>
+  <div class="row">
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas1" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart1" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
+
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas2" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart2" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas3" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart3" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas4" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart4" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas5" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart5" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6 border border-dark rounded">
+      <div class="MyCanvas6" style="height: 100%;width: 100%;background-color:white;">
+        <canvas id="myChart6" style="width:auto;height:auto">CanVas
+        </canvas>
+      </div>
+    </div>
   </div>
 
   <script>

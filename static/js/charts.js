@@ -37,7 +37,7 @@ function get_chart_data(node_id) {
             data: {
                 labels: x_label,
                 datasets: [{
-                    label: 'temperature',
+                    label: 'Temperature',
                     data: temperature,
                     // backgroundColor: ['rgba(251, 9, 9, 0.8)',],
                     borderColor: ['blue',],
@@ -58,7 +58,7 @@ function get_chart_data(node_id) {
             data: {
                 labels: x_label,
                 datasets: [{
-                    label: 'humidity',
+                    label: 'Humidity',
                     data: humidity,
                     borderColor: ['blue',],
                     borderWidth: 3
@@ -98,7 +98,7 @@ function get_chart_data(node_id) {
             data: {
                 labels: x_label,
                 datasets: [{
-                    label: 'soil_temperature',
+                    label: 'Soil Temperature',
                     data: soil_temperature,
                     borderColor: ['blue',],
                     borderWidth: 3
@@ -118,7 +118,7 @@ function get_chart_data(node_id) {
             data: {
                 labels: x_label,
                 datasets: [{
-                    label: 'soil_moisture',
+                    label: 'Soil Moisture',
                     data: soil_moisture,
                     borderColor: ['blue',],
                     borderWidth: 3
@@ -138,7 +138,7 @@ function get_chart_data(node_id) {
             data: {
                 labels: x_label,
                 datasets: [{
-                    label: 'battery_status',
+                    label: 'Battery Status',
                     data: battery_status,
                     borderColor: ['blue',],
                     borderWidth: 3
