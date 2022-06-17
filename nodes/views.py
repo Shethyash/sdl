@@ -81,3 +81,11 @@ class CrudNodes(View):
             return redirect(to='nodes')
 
         return render(request, self.template_name, {'form': form})
+
+
+def delete_node(request, node_id):
+    data = Nodes.objects.get(id=node_id)
+    data.delete()
+    messages.success(request, f'Node deleted successfully')
+    return redirect(to='nodes')
+    
