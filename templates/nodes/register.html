@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Node Register {% endblock title %}
+{% block title %}
+  {% if node_id %}
+    Edit Node
+  {% else %}
+    Node Register
+  {% endif %}
+{% endblock title %}
 {% block content %}
   <div class="form-content my-3 p-3">
     <div class="container">
@@ -7,7 +13,13 @@
         <div class="col-lg-7">
           <div class="card shadow-lg border-0 rounded-lg mt-0 mb-5">
             <div class="card-header justify-content-center">
-              <h3 class="font-weight-light my-4 text-center">Create Node</h3>
+              <h3 class="font-weight-light my-4 text-center">
+                {% if node_id %}
+                  Edit Node
+                {% else %}
+                  Create Node
+                {% endif %}
+              </h3>
             </div>
             <div class="card-body">
               <form method="POST">
@@ -28,7 +40,7 @@
                   </button>
                 </div>
               {% endif %}
-                <div class="form-row">
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="small mb-1">Name</label>
@@ -37,37 +49,44 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="small mb-1">Description</label>
-                      {{ form.description }}
+                      <label class="small mb-1">Status</label>
+                      <div class="container">
+                        <div class="row">
+                          {% for radio in form.status %}
+                            <div class="form-check col-6">
+                              {{ radio.tag }}
+                              <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                {{ radio.choice_label }}
+                              </label>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="form-row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Status</label>
-                      {% for radio in form.status %}
-                        <label for="{{ radio.id_for_label }}">
-                          {{ radio.choice_label }}
-                          <span class="radio">{{ radio.tag }}</span>
-                        </label>
-                      {% endfor %}
-                    </div>
-                  </div>
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="small mb-1">Latitude</label>
                       {{ form.latitude }}
                     </div>
                   </div>
-                </div>
-                <div class="form-row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="small mb-1">longitude</label>
                       {{ form.longitude }}
                     </div>
                   </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="small mb-1">Description</label>
+                      {{ form.description }}
+                    </div>
+                  </div>
+
                 </div>
                 <div class="form-group mt-4 mb-0">
                   <button type="submit" class="col-md-12 btn btn-dark">

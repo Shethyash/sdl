@@ -67,7 +67,7 @@ class CrudNodes(View):
             form = self.form_class(instance=data)
         else:
             form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'node_id': node_id})
 
     def post(self, request):
         form = self.form_class(request.POST)

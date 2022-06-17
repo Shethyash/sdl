@@ -1,9 +1,9 @@
 from django import forms
-from .models import Nodes, Feeds
+
+from .models import Nodes
 
 
 class RegisterForm(forms.ModelForm):
-
     name = forms.CharField(
         max_length=100,
         required=True,
@@ -23,7 +23,7 @@ class RegisterForm(forms.ModelForm):
         required=True,
         widget=forms.RadioSelect(
             choices=((True, 'Active'), (False, 'Inactive')),
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-check-input'}
         )
     )
     latitude = forms.CharField(
