@@ -27,6 +27,10 @@
       <div class="form-row">
         <div class="col-md-5">
           <div class="form-group">
+            <label class="small mb-1">First Name:</label>
+            {{ user_form.first_name }}
+            <label class="small mb-1">Last Name:</label>
+            {{ user_form.last_name }}
             <label class="small mb-1">Username:</label>
             {{ user_form.username }}
             <label class="small mb-1">Email:</label>
@@ -42,8 +46,8 @@
         </div>
       </div>
       <br/><br/>
-      <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
-      <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+      <button type="submit" class="btn btn-dark">Save</button>
+      <button type="reset" class="btn btn-dark">Reset</button>
     </form>
   </div>
 {% endblock content %}
