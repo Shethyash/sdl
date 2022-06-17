@@ -15,7 +15,7 @@ class RegisterForm(forms.ModelForm):
         max_length=100,
         required=False,
         widget=forms.Textarea(
-            attrs={'placeholder': 'add description', 'class': 'form-control'}
+            attrs={'placeholder': 'add description', 'class': 'form-control', 'rows': 5}
         )
     )
     status = forms.CharField(

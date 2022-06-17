@@ -108,7 +108,7 @@ class UpdateUserForm(forms.ModelForm):
     )
     email = forms.EmailField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': 'disabled'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'})
     )
 
     class Meta:
@@ -117,10 +117,14 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdateProfileForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=forms.FileInput(
-        attrs={'class': 'form-control-file'}))
-    bio = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form-control', 'rows': 5}))
+    avatar = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': 'form-control-file'}),
+        required=False,
+    )
+    bio = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'add bio'}),
+        required=False,
+    )
 
     class Meta:
         model = Profile

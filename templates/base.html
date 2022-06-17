@@ -37,8 +37,17 @@
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!-- base css -->
+  <!-- project css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+  <!-- favicon icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'images/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <!-- project js -->
   <script src="{% static 'js/charts.js' %}"></script>
   <title>{% block title %} {% endblock %}</title>
 </head>
@@ -94,17 +103,16 @@
       </nav>
       <!--Any flash messages pop up in any page because this is the base template-->
       {% if messages %}
-        <div class="alert alert-dismissible" role="alert">
+        <div class="alert alert-dismissible fade show" role="alert">
           {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
           {% endfor %}
           <button
               type="button"
-              class="close"
-              data-dismiss="alert"
+              class="btn-close mt-3"
+              data-bs-dismiss="alert"
               aria-label="Close"
           >
-            <span aria-hidden="true">&times;</span>
           </button>
         </div>
       {% endif %}
