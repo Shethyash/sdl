@@ -7,4 +7,5 @@ urlpatterns = [
     path('store_feeds', views.store_feeds, name='store_feeds'),
     path('get_feeds/<int:node_id>', views.get_feeds, name='get_feeds'),
     path('crud/', views.CrudNodes.as_view()),
+    path('get_chart/<int:node_id>', views.get_chart_data, name='get_chart'),
 ]
