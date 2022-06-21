@@ -91,6 +91,16 @@ class LoginForm(AuthenticationForm):
 
 
 class UpdateUserForm(forms.ModelForm):
+    first_name = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
     username = forms.CharField(
         max_length=100,
         required=True,
@@ -98,19 +108,23 @@ class UpdateUserForm(forms.ModelForm):
     )
     email = forms.EmailField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'})
     )
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'first_name', 'last_name']
 
 
 class UpdateProfileForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=forms.FileInput(
-        attrs={'class': 'form-control-file'}))
-    bio = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form-control', 'rows': 5}))
+    avatar = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': 'form-control-file'}),
+        required=False,
+    )
+    bio = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'add bio'}),
+        required=False,
+    )
 
     class Meta:
         model = Profile

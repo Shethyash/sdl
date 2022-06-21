@@ -2,6 +2,7 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
@@ -39,7 +40,7 @@ def store_feeds(request):
 @login_required
 def get_feeds(request, node_id):
     data = Feeds.objects.filter(node_id=node_id)
-    return render(request, 'nodes/get_feeds.html', {'data': data})
+    return render(request, 'nodes/get_feeds.html', {'data': data, 'node_id': node_id})
 
 
 @login_required
@@ -83,9 +84,7 @@ class CrudNodes(View):
         return render(request, self.template_name, {'form': form})
 
 
-def delete_node(request, node_id):
-    data = Nodes.objects.get(id=node_id)
-    data.delete()
-    messages.success(request, f'Node deleted successfully')
-    return redirect(to='nodes')
-    
+def get_chart_data(request, node_id):
+    data = Feeds.objects.filter(node_id=node_id)
+    res = serializers.serialize('json', data)
+    return HttpResponse(res, content_type="application/json")
