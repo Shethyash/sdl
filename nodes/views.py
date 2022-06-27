@@ -84,6 +84,13 @@ class CrudNodes(View):
         return render(request, self.template_name, {'form': form})
 
 
+@login_required
+def delete_node(request, node_id):
+    node = Nodes.objects.get(id=node_id)
+    node.delete()
+    return redirect(to='nodes')
+
+
 def get_chart_data(request, node_id):
     data = Feeds.objects.filter(node_id=node_id)
     res = serializers.serialize('json', data)
