@@ -32,6 +32,7 @@ function get_chart_data(node_id) {
         const ctx5 = document.getElementById('myChart5').getContext('2d');
         const ctx6 = document.getElementById('myChart6').getContext('2d');
 
+        $("#myChart1_title").text('Temperature');
         const graph_data1 = {
             type: 'line',
             data: {
@@ -53,6 +54,7 @@ function get_chart_data(node_id) {
             }
         };
 
+        $("#myChart2_title").text('Humidity');
         const graph_data2 = {
             type: 'line',
             data: {
@@ -73,6 +75,7 @@ function get_chart_data(node_id) {
             }
         };
 
+        $("#myChart3_title").text('LWS');
         const graph_data3 = {
             type: 'line',
             data: {
@@ -93,6 +96,7 @@ function get_chart_data(node_id) {
             }
         };
 
+        $("#myChart4_title").text('Soil Temperature');
         const graph_data4 = {
             type: 'line',
             data: {
@@ -113,6 +117,7 @@ function get_chart_data(node_id) {
             }
         };
 
+        $("#myChart5_title").text('Soil Moisture');
         const graph_data5 = {
             type: 'line',
             data: {
@@ -133,6 +138,7 @@ function get_chart_data(node_id) {
             }
         };
 
+        $("#myChart6_title").text('Battery Status');
         const graph_data6 = {
             type: 'line',
             data: {

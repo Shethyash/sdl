@@ -87,8 +87,8 @@
           <div class="navbar-nav">
             {% if user.is_authenticated %}
               <a href="{% url 'users-profile' %}" class="nav-item nav-link">
-                <i class="fa-solid fa-address-card"></i>
-                {# Profile#}
+                {#                <i class="fa-solid fa-address-card"></i>#}
+                Profile
               </a>
               <a href="{% url 'logout' %}" class="nav-item nav-link">
                 <i class="fa-solid fa-right-from-bracket"></i>

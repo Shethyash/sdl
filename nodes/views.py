@@ -40,7 +40,8 @@ def store_feeds(request):
 @login_required
 def get_feeds(request, node_id):
     data = Feeds.objects.filter(node_id=node_id)
-    return render(request, 'nodes/get_feeds.html', {'data': data, 'node_id': node_id})
+    node = Nodes.objects.get(id=node_id)
+    return render(request, 'nodes/get_feeds.html', {'data': data, 'node': node, 'node_id': node_id})
 
 
 @login_required
