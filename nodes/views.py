@@ -63,8 +63,8 @@ class CrudNodes(View):
         return super(CrudNodes, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        node_id = request.GET.get("id", None)
-        if node_id:
+        node_id = int(request.GET.get("id", 0))
+        if node_id != 0:
             data = Nodes.objects.get(id=node_id)
             form = self.form_class(instance=data)
         else:
@@ -72,14 +72,21 @@ class CrudNodes(View):
         return render(request, self.template_name, {'form': form, 'node_id': node_id})
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        node_id = int(request.POST.get('node_id', 0))
+        if node_id != 0:
+            data = Nodes.objects.get(id=node_id)
+            form = self.form_class(request.POST, instance=data)
+            msg = 'Node Edited successfully'
+        else:
+            form = self.form_class(request.POST)
+            msg = 'Node created successfully'
 
         if form.is_valid():
             node = form.save(commit=False)
             node.user_id = request.user.id
             node.save()
 
-            messages.success(request, f'Node created successfully')
+            messages.success(request, msg)
             return redirect(to='nodes')
 
         return render(request, self.template_name, {'form': form})
@@ -92,6 +99,7 @@ def delete_node(request, node_id):
     return redirect(to='nodes')
 
 
+@login_required
 def get_chart_data(request, node_id):
     data = Feeds.objects.filter(node_id=node_id)
     res = serializers.serialize('json', data)
