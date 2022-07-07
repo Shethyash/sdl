@@ -13,6 +13,7 @@ class Nodes(models.Model):
     description = models.TextField(default='')
     latitude = models.FloatField()
     longitude = models.FloatField()
+    last_feed_time = models.DateTimeField(null=True)
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 

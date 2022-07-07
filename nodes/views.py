@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.contrib import messages
@@ -5,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
@@ -21,18 +23,22 @@ def store_feeds(request):
         # store data to db
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        # print(json.dumps(body))
-        f_data = Feeds(
-            node_id=body['node_id'],
-            temperature=body['temperature'],
-            humidity=body['humidity'],
-            LWS=body['LWS'],
-            soil_temperature=body['soil_temperature'],
-            soil_moisture=body['soil_moisture'],
-            battery_status=body['battery_status'])
+        node = Nodes.objects.get(id=body['node_id'])
+        if node:
+            # print(json.dumps(body))
+            f_data = Feeds(
+                node_id=body['node_id'],
+                temperature=body['temperature'],
+                humidity=body['humidity'],
+                LWS=body['LWS'],
+                soil_temperature=body['soil_temperature'],
+                soil_moisture=body['soil_moisture'],
+                battery_status=body['battery_status'])
 
-        f_data.save()
-        return HttpResponse(json.dumps(body))
+            f_data.save()
+            node.last_feed_time = datetime.datetime.now()
+            node.save()
+            return HttpResponse(json.dumps(body))
 
     return HttpResponse()
 
@@ -47,6 +53,10 @@ def get_feeds(request, node_id):
 @login_required
 def node_list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
+    date = timezone.now()
+    for i in data:
+        if i.last_feed_time is not None and date < i.last_feed_time + datetime.timedelta(minutes=30):
+            i.status = False
     return render(request, 'nodes/list.html', {'data': data})
 
 
