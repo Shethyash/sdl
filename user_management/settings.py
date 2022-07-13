@@ -31,7 +31,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = True
 
 ALLOWED_HOSTS = ['10.100.59.13', '127.0.0.1', '0.0.0.0', '192.168.43.87']
-import django_heroku
 
 # Application definition
 
@@ -84,16 +83,23 @@ WSGI_APPLICATION = 'user_management.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+MONGO_DB = str(os.getenv('MONGO_DB'))
+MONGO_DB_USERNAME = str(os.getenv('MONGO_DB_USERNAME'))
+MONGO_DB_PASSWORD = str(os.getenv('MONGO_DB_PASSWORD'))
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
     # 'default': {
-    #     'ENGINE': 'djongo',
-    #     'NAME': 'sdl_db',
-    # }
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': MONGO_DB,
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@iot-db.ldpqm.mongodb.net/?retryWrites=true&w=majority',
+        }
+    }
 }
 
 # Password validation
