@@ -56,6 +56,7 @@ https://gutsytechster.wordpress.com/2019/06/24/how-to-setup-a-cron-job-in-django
 ### Env key
 
 - SECRET_KEY=Ur/J74Z5JAnLl70SKwKIqIUpH4CTnq+nppW+o8SNBjw=
+- DEBUG=True
 - MONGO_DB=db_name
 - MONGO_DB_USERNAME=db_username
 - MONGO_DB_PASSWORD=db_password
