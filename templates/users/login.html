@@ -31,19 +31,19 @@
                 <div class="form-row">
                   <div class="col-md-10 offset-md-1">
                     <div class="form-group">
-                      <div style="text-align: center">
-                        <a
-                            href="{% url 'social:begin' 'github' %}"
-                            class="btn btn-link btn-lg active"
-                        ><i class="fa-brands fa-github"></i></a>
-                        <a
-                            href="{% url 'social:begin' 'google-oauth2' %}"
-                            class="btn btn-link btn-lg active"
-                        ><i class="fa-brands fa-google"></i></a>
-                      </div>
-                      <hr/>
-                      <p class="text-center"><strong>OR</strong></p>
-                      <hr/>
+                      {#                      <div style="text-align: center">#}
+                      {#                        <a#}
+                      {#                            href="{% url 'social:begin' 'github' %}"#}
+                      {#                            class="btn btn-link btn-lg active"#}
+                      {#                        ><i class="fa-brands fa-github"></i></a>#}
+                      {#                        <a#}
+                      {#                            href="{% url 'social:begin' 'google-oauth2' %}"#}
+                      {#                            class="btn btn-link btn-lg active"#}
+                      {#                        ><i class="fa-brands fa-google"></i></a>#}
+                      {#                      </div>#}
+                      {#                      <hr/>#}
+                      {#                      <p class="text-center"><strong>OR</strong></p>#}
+                      {#                      <hr/>#}
                       <label class="small mb-1">Username</label>
                       {{ form.username }}
                     </div>
