@@ -59,3 +59,8 @@ https://gutsytechster.wordpress.com/2019/06/24/how-to-setup-a-cron-job-in-django
 - MONGO_DB=db_name
 - MONGO_DB_USERNAME=db_username
 - MONGO_DB_PASSWORD=db_password
+- EMAIL_USE_TLS=True
+- EMAIL_PORT=587
+- EMAIL_HOST='smtp.zoho.in'
+- EMAIL_USER=email_username
+- EMAIL_PASSWORD=password

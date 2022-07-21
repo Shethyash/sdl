@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['10.100.59.13', '127.0.0.1', '0.0.0.0', '192.168.43.87']
 
@@ -165,10 +165,10 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))
 
 # email configs
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_HOST = str(os.getenv('EMAIL_HOST'))
+EMAIL_USE_TLS = str(os.getenv('EMAIL_USE_TLS'))
 EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
+EMAIL_PORT = str(os.getenv('EMAIL_PORT'))
 EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
