@@ -54,9 +54,9 @@ def get_feeds(request, node_id):
 def node_list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
     date = timezone.now()
-    for i in data:
-        if i.last_feed_time is not None and date < i.last_feed_time + datetime.timedelta(minutes=30):
-            i.status = False
+    # for i in data:
+    #     if i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(minutes=30):
+    #         i.status = False
     return render(request, 'nodes/list.html', {'data': data})
 
 
