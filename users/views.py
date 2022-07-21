@@ -49,8 +49,7 @@ class RegisterView(View):
 
             username = form.cleaned_data.get('username')
             # email verification
-            to_list = [
-                '202111046@daiict.ac.in'] if settings.Debug else [user.email]
+            to_list = ['iotproject213@gmail.com'] if settings.DEBUG else [user.email]
             current_site = get_current_site(request)
             email_subject = 'Activate your account'
             msg = render_to_string('emails/acc_active_email.html', {

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+import django_heroku
 # To keep secret keys in environment variables
 from dotenv import load_dotenv
 
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['10.100.59.13', '127.0.0.1', '0.0.0.0', '192.168.43.87']
 
@@ -82,16 +83,23 @@ WSGI_APPLICATION = 'user_management.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+MONGO_DB = str(os.getenv('MONGO_DB'))
+MONGO_DB_USERNAME = str(os.getenv('MONGO_DB_USERNAME'))
+MONGO_DB_PASSWORD = str(os.getenv('MONGO_DB_PASSWORD'))
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
     # 'default': {
-    #     'ENGINE': 'djongo',
-    #     'NAME': 'sdl_db',
-    # }
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': MONGO_DB,
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@iot-db.ldpqm.mongodb.net/?retryWrites=true&w=majority',
+        }
+    }
 }
 
 # Password validation
@@ -136,13 +144,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'static/media/'
+MEDIA_URL = 'media/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
@@ -157,10 +165,10 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))
 
 # email configs
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_HOST = str(os.getenv('EMAIL_HOST'))
+EMAIL_USE_TLS = str(os.getenv('EMAIL_USE_TLS'))
 EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
+EMAIL_PORT = str(os.getenv('EMAIL_PORT'))
 EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
@@ -173,3 +181,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRONJOBS = [
     ('*/30 * * * *', 'nodes.cron.update_csv')
 ]
+
+django_heroku.settings(locals())
