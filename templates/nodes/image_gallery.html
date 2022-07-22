@@ -2,6 +2,24 @@
 {% block title %} Crop Image Gallery {% endblock title %}
 {% block content %}
   <h2>{{ node.name }}</h2>
-  
+  <div class="row mt-3">
+    {% for val in data %}
+      <div class="col-xs-2 col-sm-4 col-md-3">
+        <div class="card">
+          <div class=" card-body">
+            <h5 class="card-title">{{ val.created_at }}
+              <span class="float-end">
+                <a href="#"><i class="fa-solid fa-trash" style="color: red"></i></a>
+              </span>
+            </h5>
+            <img src="{{ val.image.url }}" alt="Image" style="width:15%; height: 15%">
+            <p class="card-text" style="margin-bottom: 0">
+              <label class="font-weight-bold"></label> {{ val.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 
 {% endblock content %}

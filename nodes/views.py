@@ -107,11 +107,11 @@ def crop_image_upload(request, node_id):
     form_class = ImageUploadForm
     if request.method == "POST":
         print(request.POST, request.FILES)
-        # form = form_class(request.POST, request.FILES)
-        # if form.is_valid():
-        #     crop_image = form.save(commit=False)
-        #     crop_image.node_id = node_id
-        #     crop_image.save()
+        form = form_class(request.POST, request.FILES)
+        if form.is_valid():
+            crop_image = form.save(commit=False)
+            crop_image.node_id = node_id
+            crop_image.save()
         messages.success(request, 'Image Upload successfully.')
         return redirect(to='nodes')
     return render(request, 'nodes/image_upload.html', {'form': form_class, 'node_id': node_id})

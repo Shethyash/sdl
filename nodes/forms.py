@@ -47,10 +47,6 @@ class RegisterForm(forms.ModelForm):
 
 
 class ImageUploadForm(forms.ModelForm):
-    node_id = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'})
-    )
     image = forms.ImageField(
         required=True,
         widget=forms.FileInput(
@@ -64,4 +60,4 @@ class ImageUploadForm(forms.ModelForm):
 
     class Meta:
         model = CropImage
-        fields = ['node_id', 'image', 'description']
+        fields = ['image', 'description']
