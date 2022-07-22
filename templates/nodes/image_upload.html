@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Crop Image Upload {% endblock title %}
+{% block content %}
+  <div class="form-content">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <hr/>
+            <label class="small mb-1">Crop Image:</label>
+            {{ form.image }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="small mb-1">Description:</label>
+            {{ form.description }}
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark">Save</button>
+    </form>
+  </div>
+{% endblock content %}

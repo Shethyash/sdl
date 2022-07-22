@@ -10,8 +10,8 @@ from django.utils import timezone
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from nodes.models import Nodes, Feeds
-from .forms import RegisterForm
+from nodes.models import Nodes, Feeds, CropImage
+from .forms import RegisterForm, ImageUploadForm
 
 
 # Create your views here.
@@ -100,6 +100,28 @@ class CrudNodes(View):
             return redirect(to='nodes')
 
         return render(request, self.template_name, {'form': form})
+
+
+@login_required
+def crop_image_upload(request, node_id):
+    form_class = ImageUploadForm
+    if request.method == "POST":
+        print(request.POST, request.FILES)
+        # form = form_class(request.POST, request.FILES)
+        # if form.is_valid():
+        #     crop_image = form.save(commit=False)
+        #     crop_image.node_id = node_id
+        #     crop_image.save()
+        messages.success(request, 'Image Upload successfully.')
+        return redirect(to='nodes')
+    return render(request, 'nodes/image_upload.html', {'form': form_class, 'node_id': node_id})
+
+
+@login_required
+def crop_image_gallery(request, node_id):
+    data = CropImage.objects.filter(node_id=node_id)
+    node = Nodes.objects.get(id=node_id)
+    return render(request, 'nodes/image_gallery.html', {'data': data, 'node': node, 'node_id': node_id})
 
 
 @login_required

@@ -9,5 +9,6 @@ urlpatterns = [
     path('crud/', views.CrudNodes.as_view()),
     path('delete_node/<int:node_id>', views.delete_node, name='delete_node'),
     path('get_chart/<int:node_id>', views.get_chart_data, name='get_chart'),
-
+    path('upload_image/<int:node_id>', views.crop_image_upload, name='upload_image'),
+    path('crop_image_gallery/<int:node_id>', views.crop_image_gallery, name='crop_image_gallery'),
 ]

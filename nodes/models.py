@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from PIL import Image
 from django.db import models
 
 
@@ -33,3 +34,24 @@ class Feeds(models.Model):
 
     def __str__(self):
         return self.node_id
+
+
+class CropImage(models.Model):
+    node_id = models.IntegerField()
+    image = models.ImageField(upload_to='crop_images')
+    description = models.TextField(default='')
+    created_at = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return self.node_id
+
+    # resizing images
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.image.path)

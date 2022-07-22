@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Nodes
+from .models import Nodes, CropImage
 
 
 class RegisterForm(forms.ModelForm):
@@ -44,3 +44,24 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = Nodes
         fields = ['name', 'status', 'description', 'latitude', 'longitude']
+
+
+class ImageUploadForm(forms.ModelForm):
+    node_id = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'})
+    )
+    image = forms.ImageField(
+        required=True,
+        widget=forms.FileInput(
+            attrs={'placeholder': 'image', 'class': 'form-control-file'}
+        )
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'add description'}),
+        required=False,
+    )
+
+    class Meta:
+        model = CropImage
+        fields = ['node_id', 'image', 'description']
