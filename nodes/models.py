@@ -33,7 +33,7 @@ class Feeds(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.node_id
+        return str(self.node_id)
 
 
 class CropImage(models.Model):
@@ -43,7 +43,7 @@ class CropImage(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.node_id
+        return str(self.node_id)
 
     # resizing images
     def save(self, *args, **kwargs):
