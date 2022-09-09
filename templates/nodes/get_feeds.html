@@ -5,6 +5,28 @@
 
 {% block content %}
   <h4>Node : {{ node.name }} </h4>
+  <div>
+    <table class="table">
+      <thead class="thead-dark">
+      <tr>
+        <th>Id</th>
+        <th>Node_id</th>
+        <th>Temperature</th>
+        <th>Created_at</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for i in data %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.node_id }}</td>
+          <td>{{ i.temperature }}</td>
+          <td>{{ i.created_at | date:"M d, Y" }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
   <div class="row">
     <div class="col-md-6 border border-dark rounded">
       <h5 id="myChart1_title">title</h5>

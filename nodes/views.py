@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -54,9 +55,11 @@ def get_feeds(request, node_id):
 def node_list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
     date = timezone.now()
-    # for i in data:
-    #     if i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(minutes=30):
-    #         i.status = False
+    for i in data:
+        if (i.last_feed_time is None) or i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(
+                minutes=30):
+            i.status = False
+    # fetch_data_from_thing_speak(request.user.id)
     return render(request, 'nodes/list.html', {'data': data})
 
 
@@ -136,3 +139,48 @@ def get_chart_data(request, node_id):
     data = Feeds.objects.filter(node_id=node_id)
     res = serializers.serialize('json', data)
     return HttpResponse(res, content_type="application/json")
+
+
+def fetch_data_from_thing_speak(user_id):
+    all_channel = Nodes.objects.filter(user_id=user_id)
+    try:
+        for channel in all_channel:
+            if channel.channel_id is None:
+                continue
+            last_feed = "https://api.thingspeak.com/channels/" + str(channel.channel_id) + "/feeds.json"
+            lf_query = {'api_key': channel.node_api_key, 'minutes': 30}
+            response = requests.get(last_feed, lf_query)
+            data = response.json()
+            print(data)
+            if data['channel']['last_entry_id'] != channel.last_feed_entry:
+                # fetch feeds
+                # new_feeds = data['channel']['last_entry_id'] - channel.last_feed_entry
+                # url = "https://api.thingspeak.com/channels/" + str(channel.id) + "/feeds.json"
+                # query = {'api_key': channel.last_entry_id,
+                #          'results': new_feeds,
+                #          'minutes': 30}
+                # response = requests.get(url, query)
+                # feeds = response.json()
+                for feed in data['feeds']:
+                    print(feed)
+                    # if type(feed['field5']) != int:
+                    #     continue
+                    Feeds.objects.create(
+                        node_id=channel.id,
+                        entry_id=feed['entry_id'],
+                        temperature=feed['field1'],
+                        humidity=feed['field2'],
+                        LWS=feed['field4'],
+                        soil_temperature=feed['field3'],
+                        soil_moisture=feed['field5'],
+                        battery_status=feed['field6'],
+                        created_at=feed['created_at']
+                    )
+
+                # update channel
+                channel.last_feed_entry = data['channel']['last_entry_id']
+                channel.updated_at = timezone.now()
+                channel.save()
+
+    except Nodes.DoesNotExist:
+        pass
