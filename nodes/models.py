@@ -15,6 +15,11 @@ class Nodes(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     last_feed_time = models.DateTimeField(null=True)
+    last_feed_entry = models.IntegerField(null=True)
+    thing_speak_fetch = models.BooleanField(default=False)
+    user_api_key = models.CharField(max_length=100, null=True)
+    node_api_key = models.CharField(max_length=100, null=True)
+    channel_id = models.IntegerField(max_length=50, null=True)
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 
@@ -24,6 +29,7 @@ class Nodes(models.Model):
 
 class Feeds(models.Model):
     node_id = models.IntegerField()
+    entry_id = models.IntegerField(null=True)
     temperature = models.FloatField(null=True)
     humidity = models.FloatField(null=True)
     LWS = models.FloatField(null=True)

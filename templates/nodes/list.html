@@ -24,7 +24,7 @@
         >
           <div class=" card-body">
             <h5 class="card-title">
-              {{ val.name }}
+              {{ val.id }} : {{ val.name }}
               <span class="float-end">
               {% if val.status %}
                 <i class="fa-solid fa-circle" style="color: green"></i>
@@ -40,6 +40,12 @@
             </p>
             <p class="card-text" style="margin-bottom: 0">
               <label class="font-weight-bold">Longitude : </label> {{ val.longitude }}
+            </p>
+            <p class="card-text" style="margin-bottom: 0">
+              <label class="font-weight-bold">Last Data Entry : </label> {{ val.last_feed_time | date:"M d, Y" }}
+            </p>
+            <p class="card-text" style="margin-bottom: 0">
+              <label class="font-weight-bold">Fetch From ThingSpeak : </label> {{ val.thing_speak_fetch }}
             </p>
           </div>
           <div class="card-footer">
