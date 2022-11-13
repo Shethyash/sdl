@@ -2,6 +2,7 @@ from datetime import datetime
 
 from PIL import Image
 from django.db import models
+from django.utils.timezone import now
 
 
 # Create your models here.
@@ -36,7 +37,7 @@ class Feeds(models.Model):
     soil_temperature = models.FloatField(null=True)
     soil_moisture = models.FloatField(null=True)
     battery_status = models.FloatField(null=True)
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=now)
 
     def __str__(self):
         return str(self.node_id)

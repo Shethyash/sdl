@@ -37,7 +37,7 @@ def store_feeds(request):
                 battery_status=body['battery_status'])
 
             f_data.save()
-            node.last_feed_time = datetime.datetime.now()
+            node.last_feed_time = datetime.datetime.now(tz=timezone.utc)
             node.save()
             return HttpResponse(json.dumps(body))
 
