@@ -155,11 +155,11 @@ MEDIA_URL = 'media/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
-# social auth configs for github
+# social auth configs for GitHub
 SOCIAL_AUTH_GITHUB_KEY = str(os.getenv('GITHUB_KEY'))
 SOCIAL_AUTH_GITHUB_SECRET = str(os.getenv('GITHUB_SECRET'))
 
-# social auth configs for google
+# social auth configs for Google
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv('GOOGLE_KEY'))
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))
 
