@@ -49,23 +49,26 @@
             </p>
           </div>
           <div class="card-footer">
-            <a href="get_feeds/{{ val.id }}" class="btn btn-secondary">
-              Feeds
+            <a href="get_feeds_chart/{{ val.id }}" class="col-2 btn btn-secondary">
+              <i class="fa fa-line-chart"></i>
             </a>
-            <a href="crop_image_gallery/{{ val.id }}" class="btn transparent_btn">
+            <a href="get_feeds_table/{{ val.id }}" class="col-2 btn btn-secondary">
+              <i class="fa fa-table"></i>
+            </a>
+            <a href="crop_image_gallery/{{ val.id }}" class="col-2 btn transparent_btn">
               <i class="fa-solid fa-image" style="color: #6c757d"></i>
             </a>
-            <a href="upload_image/{{ val.id }}" class="btn transparent_btn">
+            <a href="upload_image/{{ val.id }}" class="col-2 btn transparent_btn">
               <i class="fa-solid fa-upload" style="color: #6c757d"></i>
             </a>
-            <span class="float-end">
-              <a href="crud?id={{ val.id }}" class="btn transparent_btn">
-                <i class="fa-solid fa-pen" style="color: #6c757d"></i>
-              </a>
-              <a href="delete_node/{{ val.id }}" class="btn transparent_btn">
-                <i class="fa-solid fa-trash-can" style="color: #6c757d"></i>
-              </a>
-            </span>
+            {#            <span class="float-end">#}
+            <a href="crud?id={{ val.id }}" class="btn transparent_btn">
+              <i class="fa-solid fa-pen" style="color: #6c757d"></i>
+            </a>
+            <a href="delete_node/{{ val.id }}" class="btn transparent_btn">
+              <i class="fa-solid fa-trash-can" style="color: #6c757d"></i>
+            </a>
+            {#            </span>#}
           </div>
         </div>
       </div>

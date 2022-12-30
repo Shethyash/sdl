@@ -52,6 +52,13 @@ def get_feeds(request, node_id):
 
 
 @login_required
+def get_feeds_table(request, node_id):
+    data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    node = Nodes.objects.get(id=node_id)
+    return render(request, 'nodes/feed_table.html', {'data': data, 'node': node, 'node_id': node_id})
+
+
+@login_required
 def node_list(request):
     data = Nodes.objects.filter(user_id=request.user.id)
     date = timezone.now()
