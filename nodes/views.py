@@ -5,6 +5,7 @@ import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -53,9 +54,19 @@ def get_feeds(request, node_id):
 
 @login_required
 def get_feeds_table(request, node_id):
+    page_num = int(request.GET.get('page', 1))
+    if page_num <= 1:
+        page_num = 1
     data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    paginator = Paginator(data, 12)
     node = Nodes.objects.get(id=node_id)
-    return render(request, 'nodes/feed_table.html', {'data': data, 'node': node, 'node_id': node_id})
+    try:
+        page_obj = paginator.page(page_num)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, 'nodes/feed_table.html', {'data': page_obj, 'node': node, 'node_id': node_id})
 
 
 @login_required

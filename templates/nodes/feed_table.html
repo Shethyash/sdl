@@ -4,33 +4,38 @@
 
 
 {% block content %}
-  <h4>Node : {{ node.name }} </h4>
-  <div>
-    <table class="table">
-      <thead class="thead-dark">
-      <tr>
-        <th>Id</th>
-        <th>Node_id</th>
-        <th>Temperature</th>
-        <th>Humidity</th>
-        <th>Soil Moisture</th>
-        <th>Battery</th>
-        <th>Created_at</th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for i in data %}
-        <tr>
-          <td>{{ i.id }}</td>
-          <td>{{ i.node_id }}</td>
-          <td>{{ i.temperature }}</td>
-          <td>{{ i.humidity }}</td>
-          <td>{{ i.soil_moisture }}</td>
-          <td>{{ i.battery_status }}</td>
-          <td>{{ i.created_at | date:"M d, Y H:i:s" }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
+    <h4>Node : {{ node.name }} </h4>
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Node_id</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Soil Temperature</th>
+                <th>Soil Moisture</th>
+                <th>LWS</th>
+                <th>Battery</th>
+                <th>Created_at</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in data %}
+                <tr>
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.node_id }}</td>
+                    <td>{{ i.temperature }}</td>
+                    <td>{{ i.humidity }}</td>
+                    <td>{{ i.soil_temperature }}</td>
+                    <td>{{ i.soil_moisture }}</td>
+                    <td>{{ i.LWS }}</td>
+                    <td>{{ i.battery_status }}</td>
+                    <td>{{ i.created_at | date:"M d, Y H:i:s" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "pagination.html" %}
 {% endblock content %}
