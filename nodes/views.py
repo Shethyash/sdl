@@ -115,6 +115,8 @@ class CrudNodes(View):
         if form.is_valid():
             node = form.save(commit=False)
             node.user_id = request.user.id
+            if not node.thing_speak_fetch:
+                node.channel_id = 0
             node.save()
 
             messages.success(request, msg)
