@@ -150,6 +150,7 @@ def crop_image_gallery(request, node_id):
 @login_required
 def delete_node(request, node_id):
     node = Nodes.objects.get(id=node_id)
+    Feeds.objects.filter(node_id=node_id).delete()
     node.delete()
     return redirect(to='nodes')
 
