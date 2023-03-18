@@ -20,7 +20,7 @@ class Nodes(models.Model):
     thing_speak_fetch = models.BooleanField(default=False)
     user_api_key = models.CharField(max_length=100, null=True)
     node_api_key = models.CharField(max_length=100, null=True)
-    channel_id = models.IntegerField(max_length=50, null=True)
+    channel_id = models.IntegerField(null=True)
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 

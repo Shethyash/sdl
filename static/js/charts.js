@@ -32,7 +32,6 @@ function get_chart_data(node_id) {
         const ctx5 = document.getElementById('myChart5').getContext('2d');
         const ctx6 = document.getElementById('myChart6').getContext('2d');
 
-        $("#myChart1_title").text('Temperature');
         const graph_data1 = {
             type: 'line',
             data: {
@@ -46,15 +45,23 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "Temperature",
+                    display: true,
+                    fullSize: true,
+                    font: {size: 20},
+                    color: Chart.defaults.color
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         };
 
-        $("#myChart2_title").text('Humidity');
         const graph_data2 = {
             type: 'line',
             data: {
@@ -67,15 +74,20 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "Humidity",
+                    display: true,
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         };
 
-        $("#myChart3_title").text('LWS');
         const graph_data3 = {
             type: 'line',
             data: {
@@ -88,15 +100,20 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "LWS",
+                    display: true,
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         };
 
-        $("#myChart4_title").text('Soil Temperature');
         const graph_data4 = {
             type: 'line',
             data: {
@@ -109,15 +126,20 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "Soil Temperature",
+                    display: true,
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         };
 
-        $("#myChart5_title").text('Soil Moisture');
         const graph_data5 = {
             type: 'line',
             data: {
@@ -130,15 +152,20 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "Soil Moisture",
+                    display: true,
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         };
 
-        $("#myChart6_title").text('Battery Status');
         const graph_data6 = {
             type: 'line',
             data: {
@@ -151,6 +178,10 @@ function get_chart_data(node_id) {
                 }]
             },
             options: {
+                title: {
+                    text: "Battery Status",
+                    display: true,
+                },
                 scales: {
                     y: {
                         beginAtZero: true
