@@ -23,21 +23,21 @@ from .forms import RegisterForm, ImageUploadForm
 # Create your views here.
 
 def feeds_preprocess(node_id, lws):
-    last_rec = Feeds.objects.filter(node_id=node_id).order_by('-id')[0]
-    current_diff = 0.06
-    last_lws = last_rec['LWS']
-    if (last_lws >= 45000) and (lws < 45000):
-        # change in last param and add duration in current param
-        duration = last_rec['duration'] + 30  # add 30m in last duration
-    elif (last_lws < 45000) and (lws >= 45000):
-        # change in new param
-        duration = last_rec['duration'] + 30  # add 30m in last duration
+    last_rec = Feeds.objects.filter(node_id=node_id).first()
+    if last_rec:
+        last_lws = last_rec['LWS']
+        if (last_lws >= 45000) and (lws < 45000):
+            # change in last param and add duration in current param
+            duration = last_rec['duration'] + 30  # add 30m in last duration
+        elif (last_lws < 45000) and (lws >= 45000):
+            # change in new param
+            duration = last_rec['duration'] + 30  # add 30m in last duration
+        else:
+            # put blank parameter
+            duration = last_rec['duration'] + 30 if last_rec['duration'] else last_rec['duration']
+        return duration
     else:
-        # put blank parameter
-        duration = last_rec['duration']  # add 30m in last duration
-        if last_rec['duration'] != 0:
-            duration = duration + 30
-    pass
+        return 0
 
 
 @csrf_exempt
