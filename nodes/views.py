@@ -1,6 +1,10 @@
 import datetime
 import json
+import os.path
 
+import pandas as pd
+import numpy as np
+import keras
 import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,6 +21,23 @@ from .forms import RegisterForm, ImageUploadForm
 
 
 # Create your views here.
+
+def feeds_preprocess(node_id, lws):
+    last_rec = Feeds.objects.filter(node_id=node_id).order_by('-id')[0]
+    current_diff = 0.06
+    last_lws = last_rec['LWS']
+    if (last_lws >= 45000) and (lws < 45000):
+        # change in last param and add duration in current param
+        duration = last_rec['duration'] + 30  # add 30m in last duration
+    elif (last_lws < 45000) and (lws >= 45000):
+        # change in new param
+        duration = last_rec['duration'] + 30  # add 30m in last duration
+    else:
+        # put blank parameter
+        duration = last_rec['duration']  # add 30m in last duration
+        if last_rec['duration'] != 0:
+            duration = duration + 30
+    pass
 
 
 @csrf_exempt
@@ -149,9 +170,11 @@ def crop_image_gallery(request, node_id):
 
 @login_required
 def delete_node(request, node_id):
+    # TODO: complete delete feeds code
     node = Nodes.objects.get(id=node_id)
     Feeds.objects.filter(node_id=node_id).delete()
     node.delete()
+    messages.success(request, "Node deleted successfully.")
     return redirect(to='nodes')
 
 
@@ -205,3 +228,17 @@ def fetch_data_from_thing_speak(user_id):
 
     except Nodes.DoesNotExist:
         pass
+
+
+# TODO : image storage in drive
+# TODO : backup process
+# TODO : 2 way communication
+
+
+def predict_data():
+    X = [[1.2, 1.3, 1.4, 1.5, 1.6]]
+    x = np.array(X)
+    df = pd.DataFrame(x, columns=['A', 'B', 'C', 'D', 'E'])
+    model = keras.models.load_model(os.path.join('static', "models/demo_model.h5"))
+    pred = model.predict(df)
+    print(pred)
