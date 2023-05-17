@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
-# import django_heroku
 # To keep secret keys in environment variables
 from dotenv import load_dotenv
 
@@ -145,9 +144,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    # BASE_DIR / 'static',
+    BASE_DIR / 'static',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -182,5 +181,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRONJOBS = [
     ('*/30 * * * *', 'nodes.cron.update_csv')
 ]
-
-# django_heroku.settings(locals())
