@@ -9,12 +9,12 @@ To get this project up and running locally on your computer follow the following
 3. Set up a python virtual environment
 4. create .env file in project directory
 5. Run the following commands
-    - pip install -r requirements.txt
-    - python manage.py makemigrations
-    - python manage.py migrate
-    - python manage.py createsuperuser
-    - python manage.py runserver 0:8000
-6. Open a browser and go to http://localhost:8000/
+    - `pip install -r requirements.txt`
+    - `python manage.py makemigrations`
+    - `python manage.py migrate`
+    - `python manage.py createsuperuser`
+    - `python manage.py runserver 127.0.0.1:8000`
+6. Open a browser and go to `http://127.0.0.1:8000/`
 
 ![project_structure](https://user-images.githubusercontent.com/25881570/172018369-7c8167d6-cf4e-487b-8e9d-3a1fc51d4e63.png)
 
