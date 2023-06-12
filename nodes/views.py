@@ -34,7 +34,8 @@ def feeds_preprocess(node_id, lws):
             duration = last_rec['duration'] + 30  # add 30m in last duration
         else:
             # put blank parameter
-            duration = last_rec['duration'] + 30 if last_rec['duration'] else last_rec['duration']
+            duration = last_rec['duration'] + \
+                30 if last_rec['duration'] else last_rec['duration']
         return duration
     else:
         return 0
@@ -102,6 +103,21 @@ def node_list(request):
     return render(request, 'nodes/list.html', {'data': data})
 
 
+@login_required
+def node_particuler_list(request, user_id):
+    if not request.user.is_superuser:
+        return redirect(to='/get_all_users/')
+
+    data = Nodes.objects.filter(user_id=user_id)
+    date = timezone.now()
+    for i in data:
+        if (i.last_feed_time is None) or i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(
+                minutes=30):
+            i.status = False
+    # fetch_data_from_thing_speak(request.user.id)
+    return render(request, 'nodes/list.html', {'data': data})
+
+
 class CrudNodes(View):
     form_class = RegisterForm
     template_name = 'nodes/register.html'
@@ -135,13 +151,16 @@ class CrudNodes(View):
 
         if form.is_valid():
             node = form.save(commit=False)
-            node.user_id = request.user.id
+            #node.user_id = request.user.id
             if not node.thing_speak_fetch:
                 node.channel_id = 0
             node.save()
 
             messages.success(request, msg)
-            return redirect(to='nodes')
+            if node.user_id == request.user.id:
+                return redirect(to='nodes')
+            else:
+                return redirect(to='/nodes/user_nodes/' + str(node.user_id))
 
         return render(request, self.template_name, {'form': form})
 
@@ -191,7 +210,8 @@ def fetch_data_from_thing_speak(user_id):
         for channel in all_channel:
             if channel.channel_id is None:
                 continue
-            last_feed = "https://api.thingspeak.com/channels/" + str(channel.channel_id) + "/feeds.json"
+            last_feed = "https://api.thingspeak.com/channels/" + \
+                str(channel.channel_id) + "/feeds.json"
             lf_query = {'api_key': channel.node_api_key, 'minutes': 30}
             response = requests.get(last_feed, lf_query)
             data = response.json()
@@ -239,6 +259,7 @@ def predict_data():
     X = [[1.2, 1.3, 1.4, 1.5, 1.6]]
     x = np.array(X)
     df = pd.DataFrame(x, columns=['A', 'B', 'C', 'D', 'E'])
-    model = keras.models.load_model(os.path.join('static', "models/demo_model.h5"))
+    model = keras.models.load_model(
+        os.path.join('static', "models/demo_model.h5"))
     pred = model.predict(df)
     print(pred)
