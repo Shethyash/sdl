@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import keras
 import requests
+import csv
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -88,6 +89,24 @@ def get_feeds_table(request, node_id):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
     return render(request, 'nodes/feed_table.html', {'data': page_obj, 'node': node, 'node_id': node_id})
+
+@login_required
+def export_feeds_csv(request, node_id):
+    # Define the response object with appropriate headers for a CSV file
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="node_{node_id}_feeds.csv"'
+
+    # Create a CSV writer and write the header row
+    writer = csv.writer(response)
+    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity', 'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
+
+    # Fetch the data and write it to the CSV file
+    data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    
+    for feed in data:
+        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature, feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
+
+    return response
 
 
 @login_required
