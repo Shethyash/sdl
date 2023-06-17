@@ -91,3 +91,8 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = CropImage
         fields = ['image', 'description']
+
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField(
+        required=True,
+    )
