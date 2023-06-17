@@ -102,6 +102,7 @@ def export_feeds_csv(request, node_id):
 
     # Fetch the data and write it to the CSV file
     data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    
     for feed in data:
         writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature, feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
 
