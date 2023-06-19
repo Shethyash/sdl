@@ -35,7 +35,8 @@ def feeds_preprocess(node_id, lws):
             duration = last_rec['duration'] + 30  # add 30m in last duration
         else:
             # put blank parameter
-            duration = last_rec['duration'] + 30 if last_rec['duration'] else last_rec['duration']
+            duration = last_rec['duration'] + \
+                30 if last_rec['duration'] else last_rec['duration']
         return duration
     else:
         return 0
@@ -90,6 +91,7 @@ def get_feeds_table(request, node_id):
         page_obj = paginator.page(paginator.num_pages)
     return render(request, 'nodes/feed_table.html', {'data': page_obj, 'node': node, 'node_id': node_id})
 
+
 @login_required
 def export_feeds_csv(request, node_id):
     # Define the response object with appropriate headers for a CSV file
@@ -98,13 +100,15 @@ def export_feeds_csv(request, node_id):
 
     # Create a CSV writer and write the header row
     writer = csv.writer(response)
-    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity', 'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
+    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity',
+                    'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
 
     # Fetch the data and write it to the CSV file
     data = Feeds.objects.filter(node_id=node_id).order_by('-id')
-    
+
     for feed in data:
-        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature, feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
+        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature,
+                        feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
 
     return response
 
@@ -118,7 +122,22 @@ def node_list(request):
                 minutes=30):
             i.status = False
     # fetch_data_from_thing_speak(request.user.id)
-    return render(request, 'nodes/list.html', {'data': data})
+    return render(request, 'nodes/list.html', {'data': data, 'user_id': request.user.id})
+
+
+@login_required
+def node_particuler_list(request, user_id):
+    if not request.user.is_superuser:
+        return redirect(to='/get_all_users/')
+
+    data = Nodes.objects.filter(user_id=user_id)
+    date = timezone.now()
+    for i in data:
+        if (i.last_feed_time is None) or i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(
+                minutes=30):
+            i.status = False
+    # fetch_data_from_thing_speak(request.user.id)
+    return render(request, 'nodes/list.html', {'data': data, 'user_id': user_id})
 
 
 class CrudNodes(View):
@@ -135,15 +154,21 @@ class CrudNodes(View):
 
     def get(self, request, *args, **kwargs):
         node_id = int(request.GET.get("id", 0))
+        # print(node_id)
+        user_id = int(request.GET.get("user_id", 0))
+        # print(user_id)
         if node_id != 0:
             data = Nodes.objects.get(id=node_id)
             form = self.form_class(instance=data)
         else:
             form = self.form_class()
-        return render(request, self.template_name, {'form': form, 'node_id': node_id})
+        return render(request, self.template_name, {'form': form, 'node_id': node_id, 'user_id': user_id})
 
     def post(self, request):
         node_id = int(request.POST.get('node_id', 0))
+        # print(node_id)
+        user_id = int(request.POST.get('user_id', 0))
+        # print(user_id)
         if node_id != 0:
             data = Nodes.objects.get(id=node_id)
             form = self.form_class(request.POST, instance=data)
@@ -154,13 +179,18 @@ class CrudNodes(View):
 
         if form.is_valid():
             node = form.save(commit=False)
-            node.user_id = request.user.id
+            #node.user_id = request.user.id
+            if node.user_id == 0:
+                node.user_id = user_id
             if not node.thing_speak_fetch:
                 node.channel_id = 0
             node.save()
 
             messages.success(request, msg)
-            return redirect(to='nodes')
+            if node.user_id == request.user.id:
+                return redirect(to='nodes')
+            else:
+                return redirect(to='/nodes/user_nodes/' + str(node.user_id))
 
         return render(request, self.template_name, {'form': form})
 
@@ -194,7 +224,11 @@ def delete_node(request, node_id):
     Feeds.objects.filter(node_id=node_id).delete()
     node.delete()
     messages.success(request, "Node deleted successfully.")
-    return redirect(to='nodes')
+    # return redirect(to='nodes')
+    if node.user_id == request.user.id:
+        return redirect(to='nodes')
+    else:
+        return redirect(to='/nodes/user_nodes/' + str(node.user_id))
 
 
 @login_required
@@ -210,7 +244,8 @@ def fetch_data_from_thing_speak(user_id):
         for channel in all_channel:
             if channel.channel_id is None:
                 continue
-            last_feed = "https://api.thingspeak.com/channels/" + str(channel.channel_id) + "/feeds.json"
+            last_feed = "https://api.thingspeak.com/channels/" + \
+                str(channel.channel_id) + "/feeds.json"
             lf_query = {'api_key': channel.node_api_key, 'minutes': 30}
             response = requests.get(last_feed, lf_query)
             data = response.json()
@@ -258,13 +293,14 @@ def predict_data():
     X = [[1.2, 1.3, 1.4, 1.5, 1.6]]
     x = np.array(X)
     df = pd.DataFrame(x, columns=['A', 'B', 'C', 'D', 'E'])
-    model = keras.models.load_model(os.path.join('static', "models/demo_model.h5"))
+    model = keras.models.load_model(
+        os.path.join('static', "models/demo_model.h5"))
     pred = model.predict(df)
     print(pred)
 
 
 @login_required
-def import_csv(request,node_id):
+def import_csv(request, node_id):
     form_class = CSVImportForm
     form = form_class()
     if request.method == 'POST':
@@ -273,16 +309,17 @@ def import_csv(request,node_id):
         if not form.is_valid():
             messages.error(request, "Invalid form.")
             return redirect(to='nodes')
-        
+
         node = Nodes.objects.get(id=node_id)
         if not node:
             messages.error(request, "Node not found.")
             return redirect(to='nodes')
-        
+
         csv_file = request.FILES['csv_file']
         df = pd.read_csv(csv_file)
 
-        header_set = set(['temperature','humidity','LWS','soil_temperature','soil_moisture','battery_status','created_at'])
+        header_set = set(['temperature', 'humidity', 'LWS', 'soil_temperature',
+                         'soil_moisture', 'battery_status', 'created_at'])
 
         # check if csv file has exactly same columns headers
         if not set(df.columns) == header_set:
@@ -298,6 +335,10 @@ def import_csv(request,node_id):
         Feeds.objects.bulk_create([Feeds(**record) for record in records])
 
         messages.success(request, "data imported successfully.")
-        return redirect(to='nodes')
+        # return redirect(to='nodes')
+        if node.user_id == request.user.id:
+            return redirect(to='nodes')
+        else:
+            return redirect(to=f'/nodes/user_nodes/{node.user_id}')
 
-    return render(request, 'nodes/import_csv.html', {'form': form,'node_id': node_id})
+    return render(request, 'nodes/import_csv.html', {'form': form, 'node_id': node_id})
