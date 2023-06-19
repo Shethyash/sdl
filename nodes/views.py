@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import keras
 import requests
+import csv
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -17,7 +18,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from nodes.models import Nodes, Feeds, CropImage
-from .forms import RegisterForm, ImageUploadForm
+from .forms import RegisterForm, ImageUploadForm, CSVImportForm
 
 
 # Create your views here.
@@ -89,6 +90,24 @@ def get_feeds_table(request, node_id):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
     return render(request, 'nodes/feed_table.html', {'data': page_obj, 'node': node, 'node_id': node_id})
+
+@login_required
+def export_feeds_csv(request, node_id):
+    # Define the response object with appropriate headers for a CSV file
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="node_{node_id}_feeds.csv"'
+
+    # Create a CSV writer and write the header row
+    writer = csv.writer(response)
+    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity', 'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
+
+    # Fetch the data and write it to the CSV file
+    data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    
+    for feed in data:
+        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature, feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
+
+    return response
 
 
 @login_required
@@ -275,3 +294,43 @@ def predict_data():
         os.path.join('static', "models/demo_model.h5"))
     pred = model.predict(df)
     print(pred)
+
+
+@login_required
+def import_csv(request,node_id):
+    form_class = CSVImportForm
+    form = form_class()
+    if request.method == 'POST':
+        form = form_class(request.POST, request.FILES)
+
+        if not form.is_valid():
+            messages.error(request, "Invalid form.")
+            return redirect(to='nodes')
+        
+        node = Nodes.objects.get(id=node_id)
+        if not node:
+            messages.error(request, "Node not found.")
+            return redirect(to='nodes')
+        
+        csv_file = request.FILES['csv_file']
+        df = pd.read_csv(csv_file)
+
+        header_set = set(['temperature','humidity','LWS','soil_temperature','soil_moisture','battery_status','created_at'])
+
+        # check if csv file has exactly same columns headers
+        if not set(df.columns) == header_set:
+            messages.error(request, "Invalid csv file.")
+            return redirect(to='nodes')
+
+        # Insert data into feeds collection
+        records = df.to_dict(orient='records')
+
+        # bulk create feed data with adding node id
+        for record in records:
+            record['node_id'] = node_id
+        Feeds.objects.bulk_create([Feeds(**record) for record in records])
+
+        messages.success(request, "data imported successfully.")
+        return redirect(to='nodes')
+
+    return render(request, 'nodes/import_csv.html', {'form': form,'node_id': node_id})
