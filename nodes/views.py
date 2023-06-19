@@ -91,6 +91,7 @@ def get_feeds_table(request, node_id):
         page_obj = paginator.page(paginator.num_pages)
     return render(request, 'nodes/feed_table.html', {'data': page_obj, 'node': node, 'node_id': node_id})
 
+
 @login_required
 def export_feeds_csv(request, node_id):
     # Define the response object with appropriate headers for a CSV file
@@ -99,13 +100,15 @@ def export_feeds_csv(request, node_id):
 
     # Create a CSV writer and write the header row
     writer = csv.writer(response)
-    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity', 'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
+    writer.writerow(['Id', 'Node_id', 'Temperature', 'Humidity',
+                    'Soil Temperature', 'Soil Moisture', 'LWS', 'Battery', 'Created_at'])
 
     # Fetch the data and write it to the CSV file
     data = Feeds.objects.filter(node_id=node_id).order_by('-id')
-    
+
     for feed in data:
-        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature, feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
+        writer.writerow([feed.id, feed.node_id, feed.temperature, feed.humidity, feed.soil_temperature,
+                        feed.soil_moisture, feed.LWS, feed.battery_status, feed.created_at.strftime("%b %d, %Y %H:%M:%S")])
 
     return response
 
@@ -297,7 +300,7 @@ def predict_data():
 
 
 @login_required
-def import_csv(request,node_id):
+def import_csv(request, node_id):
     form_class = CSVImportForm
     form = form_class()
     if request.method == 'POST':
@@ -306,16 +309,17 @@ def import_csv(request,node_id):
         if not form.is_valid():
             messages.error(request, "Invalid form.")
             return redirect(to='nodes')
-        
+
         node = Nodes.objects.get(id=node_id)
         if not node:
             messages.error(request, "Node not found.")
             return redirect(to='nodes')
-        
+
         csv_file = request.FILES['csv_file']
         df = pd.read_csv(csv_file)
 
-        header_set = set(['temperature','humidity','LWS','soil_temperature','soil_moisture','battery_status','created_at'])
+        header_set = set(['temperature', 'humidity', 'LWS', 'soil_temperature',
+                         'soil_moisture', 'battery_status', 'created_at'])
 
         # check if csv file has exactly same columns headers
         if not set(df.columns) == header_set:
@@ -331,6 +335,10 @@ def import_csv(request,node_id):
         Feeds.objects.bulk_create([Feeds(**record) for record in records])
 
         messages.success(request, "data imported successfully.")
-        return redirect(to='nodes')
+        # return redirect(to='nodes')
+        if node.user_id == request.user.id:
+            return redirect(to='nodes')
+        else:
+            return redirect(to=f'/nodes/user_nodes/{node.user_id}')
 
-    return render(request, 'nodes/import_csv.html', {'form': form,'node_id': node_id})
+    return render(request, 'nodes/import_csv.html', {'form': form, 'node_id': node_id})
