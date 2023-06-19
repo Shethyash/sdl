@@ -75,28 +75,27 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         {% if user.is_superuser %}
                             <li class="nav-item">
-                                <a href="/get_all_users" class="nav-item nav-link">Users</a>
+                                <a href="/get_all_users" class="nav-link">Users</a>
                             </li>
                         {% endif %}
                         {# {% if user.is_authenticated and not user.is_superuser %}#}
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a href="/nodes" class="nav-item nav-link">Nodes</a>
+                                <a href="/nodes" class="nav-link">Nodes</a>
                             </li>
                         {% endif %}
                     </ul>
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'users-profile' %}" class="nav-item nav-link">
+                            <a href="{% url 'users-profile' %}" class="nav-link">
                                 {#                <i class="fa-solid fa-address-card"></i>#}
                                 Profile
                             </a>
-                            <a href="{% url 'logout' %}" class="nav-item nav-link">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                {# logout #}
+                            <a href="{% url 'logout' %}" class="nav-link">
+                                logout
                             </a>
                         {% else %}
-                            <a href="{% url 'login' %}" class="nav-item nav-link">Sign in</a>
+                            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
                         {% endif %}
                     </div>
                 </div>

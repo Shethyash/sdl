@@ -23,23 +23,53 @@ from .forms import RegisterForm, ImageUploadForm, CSVImportForm
 
 # Create your views here.
 
-def feeds_preprocess(node_id, lws):
-    last_rec = Feeds.objects.filter(node_id=node_id).first()
-    if last_rec:
-        last_lws = last_rec['LWS']
-        if (last_lws >= 45000) and (lws < 45000):
-            # change in last param and add duration in current param
-            duration = last_rec['duration'] + 30  # add 30m in last duration
-        elif (last_lws < 45000) and (lws >= 45000):
-            # change in new param
-            duration = last_rec['duration'] + 30  # add 30m in last duration
-        else:
-            # put blank parameter
-            duration = last_rec['duration'] + \
-                30 if last_rec['duration'] else last_rec['duration']
-        return duration
+def feeds_preprocess(node_id, lws, c_time):
+    rec = Feeds.objects.filter(node_id=node_id).order_by('-id').values()
+    if not rec:
+        return {'duration': 0, 'event': 0}
+    last_rec = rec[0]
+    timediff = c_time - last_rec['created_at']
+    timediff = int((timediff.total_seconds()) / 3600)
+    last_lws = last_rec['LWS']
+    if (last_lws >= 46000) and (lws < 46000):
+        # event starting point
+        # TODO : change in last param and add duration in current param
+        # duration = timediff
+        # event = 1
+        return {'duration': timediff, 'event': 1}
+    elif (last_lws < 46000) and (lws >= 46000):
+        # end of event, change in new param
+        duration = last_rec['duration'] + timediff
+        # event = 0
+        return {'duration': duration, 'event': 0}
     else:
-        return 0
+        # put blank parameter
+        if last_rec['event'] == 1:
+            duration = last_rec['duration'] if last_rec['duration'] is not None else 0 + timediff
+        else:
+            duration = last_rec['duration'] if last_rec['duration'] is not None else 0
+        event = last_rec['event'] if last_rec['event'] else 0
+        # print(duration, last_rec['event'])
+        return {'duration': duration, 'event': event}
+
+
+def get_gwc(sm):
+    file = open(os.path.join('static', "csv/calibration_data.csv"))
+    csv_reader = csv.reader(file)
+    rows = []
+    for row in csv_reader:
+        rows.append({'content': float(row[0]), 'frequency': float(row[1])})
+
+    file.close()
+    for it in range(0, len(rows) - 1):
+        if rows[it]['frequency'] > sm > rows[it + 1]['frequency']:
+            a = rows[it]['frequency'] - rows[it + 1]['frequency']
+            b = rows[it + 1]['content'] - rows[it]['content']
+            c = a * (rows[it + 1]['frequency']) + b * (rows[it + 1]['content'])
+            gwc = (c - (b * sm)) / a
+            # print(rows[it][0], gwc)
+            return gwc
+    return 0
 
 
 @csrf_exempt
@@ -48,9 +78,16 @@ def store_feeds(request):
         # store data to db
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
+        print(json.dumps(body))
         node = Nodes.objects.get(id=body['node_id'])
         if node:
-            # print(json.dumps(body))
+            c_time = datetime.datetime.now(tz=timezone.utc)
+            # get leaf wetness duration
+            dura = feeds_preprocess(body['node_id'], body['LWS'], c_time)
+            print(dura)
+            gwc = get_gwc(body['soil_moisture'])
+            # get predication for current data
+            pred = predict_data(body['temperature'], body['humidity'], body['soil_temperature'], dura['duration'], 0.0)
             f_data = Feeds(
                 node_id=body['node_id'],
                 temperature=body['temperature'],
@@ -58,10 +95,18 @@ def store_feeds(request):
                 LWS=body['LWS'],
                 soil_temperature=body['soil_temperature'],
                 soil_moisture=body['soil_moisture'],
-                battery_status=body['battery_status'])
+                battery_status=body['battery_status'],
+                duration=dura['duration'],
+                GWC=gwc,
+                event=dura['event'],
+                powdery_mildew=pred['powdery_mildew'],
+                anthracnose=pred['anthracnose'],
+                root_rot=pred['root_rot'],
+                irrigation=pred['irrigation'],
+            )
 
             f_data.save()
-            node.last_feed_time = datetime.datetime.now(tz=timezone.utc)
+            node.last_feed_time = c_time
             node.save()
             return HttpResponse(json.dumps(body))
 
@@ -115,6 +160,8 @@ def export_feeds_csv(request, node_id):
 
 @login_required
 def node_list(request):
+    # print(predict_data(27.378, 88.05571, 18.84202, 0.5522222222222222, 0.0))
+    get_gwc(9687.3379)
     data = Nodes.objects.filter(user_id=request.user.id)
     date = timezone.now()
     for i in data:
@@ -289,14 +336,19 @@ def fetch_data_from_thing_speak(user_id):
 # TODO : 2 way communication
 
 
-def predict_data():
-    X = [[1.2, 1.3, 1.4, 1.5, 1.6]]
-    x = np.array(X)
-    df = pd.DataFrame(x, columns=['A', 'B', 'C', 'D', 'E'])
-    model = keras.models.load_model(
-        os.path.join('static', "models/demo_model.h5"))
+def predict_data(at, ah, st, lwd, sm):
+    arr = [[at, ah, st, lwd, sm]]
+    np_arr = np.array(arr)
+    df = pd.DataFrame(np_arr,
+                      columns=["Ambient_Temperature", "Ambient_Humidity", "Soil_Temperature", "Leaf_Wetness_Duration",
+                               "Soil_Moisture"])
+    model = keras.models.load_model(os.path.join('static', "models/demo_model.h5"))
+    # print(df)
     pred = model.predict(df)
-    print(pred)
+    # print(pred[0], pred[1])
+    # return {'powdery_mildew': 0, 'anthracnose': 0, 'root_rot': 0, 'irrigation': 1}
+    return {'powdery_mildew': pred[0][0][0], 'anthracnose': pred[0][0][1], 'root_rot': pred[0][0][2],
+            'irrigation': pred[1][0][0]}
 
 
 @login_required
