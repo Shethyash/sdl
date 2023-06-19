@@ -15,6 +15,13 @@ urlpatterns = [
          views.crop_image_upload, name='upload_image'),
     path('crop_image_gallery/<int:node_id>',
          views.crop_image_gallery, name='crop_image_gallery'),
+    path('upload_image/<int:node_id>',
+         views.crop_image_upload, name='upload_image'),
+    path('crop_image_gallery/<int:node_id>',
+         views.crop_image_gallery, name='crop_image_gallery'),
+    path('import-csv/<int:node_id>', views.import_csv, name='import_csv'),
+    path('export_feeds_csv/<int:node_id>/',
+         views.export_feeds_csv, name='export_feeds_csv'),
 
     # particular User Nodes
     path('user_nodes/<int:user_id>', views.node_particuler_list, name='user_nodes'),
@@ -32,10 +39,10 @@ urlpatterns = [
          views.crop_image_upload, name='user_upload_image'),
     path('user_nodes/crop_image_gallery/<int:node_id>',
          views.crop_image_gallery, name='user_crop_image_gallery'),
+    path('user_nodes/import-csv/<int:node_id>',
+         views.import_csv, name='user_import_csv'),
+    path('user_nodes/export_feeds_csv/<int:node_id>/',
+         views.export_feeds_csv, name='user_export_feeds_csv'),
 
-    path('upload_image/<int:node_id>', views.crop_image_upload, name='upload_image'),
-    path('crop_image_gallery/<int:node_id>', views.crop_image_gallery, name='crop_image_gallery'),
-    path('import-csv/<int:node_id>', views.import_csv, name='import_csv'),
-    path('export_feeds_csv/<int:node_id>/', views.export_feeds_csv, name='export_feeds_csv'),
-    
+
 ]
