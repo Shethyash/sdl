@@ -100,7 +100,7 @@ def node_list(request):
                 minutes=30):
             i.status = False
     # fetch_data_from_thing_speak(request.user.id)
-    return render(request, 'nodes/list.html', {'data': data})
+    return render(request, 'nodes/list.html', {'data': data, 'user_id': request.user.id})
 
 
 @login_required
@@ -115,7 +115,7 @@ def node_particuler_list(request, user_id):
                 minutes=30):
             i.status = False
     # fetch_data_from_thing_speak(request.user.id)
-    return render(request, 'nodes/list.html', {'data': data})
+    return render(request, 'nodes/list.html', {'data': data, 'user_id': user_id})
 
 
 class CrudNodes(View):
@@ -132,15 +132,21 @@ class CrudNodes(View):
 
     def get(self, request, *args, **kwargs):
         node_id = int(request.GET.get("id", 0))
+        # print(node_id)
+        user_id = int(request.GET.get("user_id", 0))
+        # print(user_id)
         if node_id != 0:
             data = Nodes.objects.get(id=node_id)
             form = self.form_class(instance=data)
         else:
             form = self.form_class()
-        return render(request, self.template_name, {'form': form, 'node_id': node_id})
+        return render(request, self.template_name, {'form': form, 'node_id': node_id, 'user_id': user_id})
 
     def post(self, request):
         node_id = int(request.POST.get('node_id', 0))
+        # print(node_id)
+        user_id = int(request.POST.get('user_id', 0))
+        # print(user_id)
         if node_id != 0:
             data = Nodes.objects.get(id=node_id)
             form = self.form_class(request.POST, instance=data)
@@ -152,6 +158,8 @@ class CrudNodes(View):
         if form.is_valid():
             node = form.save(commit=False)
             #node.user_id = request.user.id
+            if node.user_id == 0:
+                node.user_id = user_id
             if not node.thing_speak_fetch:
                 node.channel_id = 0
             node.save()
@@ -194,7 +202,11 @@ def delete_node(request, node_id):
     Feeds.objects.filter(node_id=node_id).delete()
     node.delete()
     messages.success(request, "Node deleted successfully.")
-    return redirect(to='nodes')
+    # return redirect(to='nodes')
+    if node.user_id == request.user.id:
+        return redirect(to='nodes')
+    else:
+        return redirect(to='/nodes/user_nodes/' + str(node.user_id))
 
 
 @login_required

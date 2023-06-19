@@ -17,20 +17,20 @@ urlpatterns = [
          views.crop_image_gallery, name='crop_image_gallery'),
 
     # particular User Nodes
-    path('user_nodes/<int:user_id>', views.node_particuler_list, name='nodes'),
-    path('user_nodes/store_feeds', views.store_feeds, name='store_feeds'),
+    path('user_nodes/<int:user_id>', views.node_particuler_list, name='user_nodes'),
+    path('user_nodes/store_feeds', views.store_feeds, name='user_store_feeds'),
     path('user_nodes/get_feeds_chart/<int:node_id>',
-         views.get_feeds, name='get_feeds'),
+         views.get_feeds, name='user_get_feeds'),
     path('user_nodes/get_feeds_table/<int:node_id>',
-         views.get_feeds_table, name='get_feeds_table'),
+         views.get_feeds_table, name='user_get_feeds_table'),
     path('user_nodes/crud/', views.CrudNodes.as_view()),
     path('user_nodes/delete_node/<int:node_id>',
-         views.delete_node, name='delete_node'),
+         views.delete_node, name='user_delete_node'),
     path('user_nodes/get_chart/<int:node_id>',
-         views.get_chart_data, name='get_chart'),
+         views.get_chart_data, name='user_get_chart'),
     path('user_nodes/upload_image/<int:node_id>',
-         views.crop_image_upload, name='upload_image'),
+         views.crop_image_upload, name='user_upload_image'),
     path('user_nodes/crop_image_gallery/<int:node_id>',
-         views.crop_image_gallery, name='crop_image_gallery'),
+         views.crop_image_gallery, name='user_crop_image_gallery'),
 
 ]
