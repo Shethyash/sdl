@@ -37,6 +37,13 @@ class Feeds(models.Model):
     soil_temperature = models.FloatField(null=True)
     soil_moisture = models.FloatField(null=True)
     battery_status = models.FloatField(null=True)
+    GWC = models.FloatField(null=True)
+    duration = models.FloatField(null=True, default=0)
+    event = models.BooleanField(null=True, default=0)
+    powdery_mildew = models.FloatField(null=True, default=0)
+    anthracnose = models.FloatField(null=True, default=0)
+    root_rot = models.FloatField(null=True, default=0)
+    irrigation = models.FloatField(null=True, default=0)
     created_at = models.DateTimeField(default=now)
 
     def __str__(self):
