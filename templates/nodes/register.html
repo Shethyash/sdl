@@ -1,12 +1,17 @@
 {% extends "base.html" %}
-{% block title %}
+{% block title %}  Node Register {% endblock title %}
+{% block htmlhead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Nodes/node_register.css' %}">
+{% endblock htmlhead %}
+{% block content %}
   {% if node_id %}
     Edit Node
   {% else %}
     Node Register
   {% endif %}
-{% endblock title %}
-{% block content %}
+{#{% endblock title %}#}
+{#{% block content %}#}
   <div class="form-content my-3">
     <div class="container">
       <div class="row justify-content-center">
@@ -41,7 +46,6 @@
                 </div>
               {% endif %}
                 <input type="hidden" name="node_id" value="{{ node_id }}">
-                <input type="hidden" name="user_id" value="{{ user_id }}">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">

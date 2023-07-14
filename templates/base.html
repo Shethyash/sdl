@@ -50,79 +50,79 @@
     <!-- project js -->
     <script src="{% static 'js/charts.js' %}"></script>
     <title>{% block title %} {% endblock %}</title>
+    {% block htmlhead %}
+    {% endblock htmlhead %}
 </head>
 <body>
-<div class="container-fluid p-3">
-    <div class="row">
-        <div class="col-md-12">
-            <nav
-                    class="navbar navbar-expand-md navbar-light"
-                    style="background-color: #f0f5f5"
-            >
-                <a class="navbar-brand" href="/" style="margin-left: 1rem;">
-                    <img
-                            src="{% static '/images/brand_logo.jpg' %}"
-                            width="100" height="40" class="d-inline-block align-top"
-                            alt="">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavAltMarkup"
-                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
-                        style="margin-right: 1rem;">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        {% if user.is_superuser %}
-                            <li class="nav-item">
-                                <a href="/get_all_users" class="nav-link">Users</a>
-                            </li>
-                        {% endif %}
-                        {# {% if user.is_authenticated and not user.is_superuser %}#}
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a href="/nodes" class="nav-link">Nodes</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <div class="navbar-nav">
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'users-profile' %}" class="nav-link">
-                                {#                <i class="fa-solid fa-address-card"></i>#}
-                                Profile
-                            </a>
-                            <a href="{% url 'logout' %}" class="nav-link">
-                                logout
-                            </a>
-                        {% else %}
-                            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-                        {% endif %}
-                    </div>
-                </div>
-
-            </nav>
-            <!--Any flash messages pop up in any page because this is the base template-->
-            {% if messages %}
-                <div class="alert alert-dismissible fade show" role="alert">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                    {% endfor %}
-                    <button
-                            type="button"
-                            class="btn-close mt-3"
-                            data-bs-dismiss="alert"
-                            aria-label="Close"
-                    >
+        <div>
+            <div class="col-md-12">
+                <nav
+                        class="navbar navbar-expand-md navbar-light"
+                >
+                    <a class="navbar-brand" href="/">
+                        <img
+                                src="{% static '/images/brand_logo.jpg' %}"
+                                width="150" height="35" class="d-inline-block align-top mt-2"
+                                alt="">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavAltMarkup"
+                            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                            style="margin-right: 1rem;">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-                </div>
-            {% endif %}
-            <div class="pt-3">
-                {% block content %}{% endblock %}
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            {% if user.is_superuser %}
+                                <li class="nav-item">
+                                    <a href="/get_all_users" class="nav-item nav-link" style="color: rgb(238, 194, 27); font-weight: bolder;">Users</a>
+                                </li>
+                            {% endif %}
+                            {# {% if user.is_authenticated and not user.is_superuser %}#}
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a href="/nodes" class="nav-item nav-link" style="color: rgb(238, 194, 27); font-weight: bold;">Nodes</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <div class="navbar-nav">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'users-profile' %}" class="nav-item nav-link" style="color:rgb(238, 194, 27); font-weight: bold;">
+                                    {#                <i class="fa-solid fa-address-card"></i>#}
+                                    Profile
+                                </a>
+                                <a href="{% url 'logout' %}" class="nav-item nav-link" style="color: rgb(238, 194, 27); font-weight: bold;">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    {# logout #}
+                                </a>
+                            {% else %}
+                                <!-- <a href="{% url 'login' %}" class="nav-item nav-link">Sign in</a> -->
+                            {% endif %}
+                        </div>
+                    </div>
+    
+                </nav>
+                <!--Any flash messages pop up in any page because this is the base template-->
+                {% if messages %}
+                    <div class="alert alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                        <button
+                                type="button"
+                                class="btn-close mt-3"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                        >
+                        </button>
+                    </div>
+                {% endif %}
             </div>
         </div>
+    <div class="mainContent">
+        {% block content %}{% endblock %}
     </div>
-</div>
-
+    
 <!-- jQuery first, then Popper.js -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script

@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% block title %} Nodes {% endblock title %}
+{% block htmlhead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Nodes/list.css' %}">     
+{% endblock htmlhead %}
 {% block content %}
-    <div class="container">
+    <div class="main">
         <div class="row">
             <div class="col-6">
                 <h3>Nodes</h3>
             </div>
-            <div class="col-6 text-end">
-                <a href="crud?user_id={{ user_id }}" class="btn btn-primary">
+            <div class="col-6">
+                <a href="crud" class="btn btnadd">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
@@ -63,9 +67,6 @@
                                 <a href="get_feeds_table/{{ val.id }}" class="col-2 btn transparent_btn">
                                     <i class="fa fa-table"></i>
                                 </a>
-                                <a href="export_feeds_csv/{{ val.id }}" class="col-2 btn transparent_btn">
-                                    <i class="fa-solid fa-file-csv"></i>
-                                </a>
                                 <a href="crop_image_gallery/{{ val.id }}" class="col-2 btn transparent_btn">
                                     <i class="fa-solid fa-image"></i>
                                 </a>
@@ -75,14 +76,10 @@
                                 <a href="crud?id={{ val.id }}" class="col-2 btn transparent_btn">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
-                                <a href="import-csv/{{ val.id }}" class="col-2 btn transparent_btn">
-                                    <i class="fa-solid fa-file-import"></i>
-                                </a>
-                                <a href="delete_node/{{ val.id }}" class="delete col-2 btn transparent_btn"
+                                <a href="#" class="delete col-2 btn transparent_btn"
                                    data-id={{ val.id }} data-name={{ val.name }}>
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-                                
                             </div>
                         </div>
                     </div>
@@ -102,7 +99,7 @@
                 const delete_id = $(this).data('id');
                 const node_name = $(this).data('name')
                 console.log(node_name)
-                //{#console.log(deleteid);#}
+                {#console.log(deleteid);#}
                 // Confirm box
                 bootbox.confirm("Do you really want to delete Node : " + node_name + " ? <br> It will delete all data permanently", function (result) {
 

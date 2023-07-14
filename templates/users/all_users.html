@@ -1,26 +1,30 @@
 {% extends "base.html" %}
 {% block title %} User {% endblock title %}
+{% block htmlhead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/allUsers.css' %}">     
+{% endblock htmlhead %}
 {% block content %}
-  <div class="row pb-3">
+<div class="main">
+  <div class="row">
     <div class="col-6">
       <h3>List of User</h3>
     </div>
     <div class="col-6">
-      <a href="#" class="btn btn-primary float-end">
+      <a href="#" class="btn">
         <i class="fa-solid fa-user-plus"></i>
       </a>
     </div>
   </div>
 
   <table class="table table-striped">
-    <tr>
-      <td>ID</td>
-      <td>UserName</td>
-      <td>Name</td>
-      <td>Email</td>
-      <td>Admin User</td>
-      <td>Action</td>
-    </tr>
+    <thead>
+      <th>ID</th>
+      <th>UserName</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+    </thead>
     {% for user in users %}
       <tr>
         <td>{{ user.id }}</td>
@@ -28,14 +32,8 @@
         <td>{{ user.first_name }} {{ user.last_name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.is_superuser }}</td>
-        <td>
-          <i class="fas fa-eye" style="margin-right: 5px;"></i>
-          <i class="fa-solid fa-pen" style="margin-right: 5px;"></i>
-          <i class="fas fa-trash-alt"></i>
-          <button id = user.id> <a href="/nodes/user_nodes/{{ user.id }}">view</a></button>
-        </td>
       </tr>
     {% endfor %}
   </table>
-
+</div>
 {% endblock content %}
