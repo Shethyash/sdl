@@ -25,7 +25,7 @@ from .forms import RegisterForm, ImageUploadForm, CSVImportForm
 
 def feeds_preprocess(node_id, lws, c_time):
     rec = Feeds.objects.filter(node_id=node_id).order_by('-id').values()
-    if not rec:
+    if not rec: 
         return {'duration': 0, 'event': 0}
     last_rec = rec[0]
     timediff = c_time - last_rec['created_at']
