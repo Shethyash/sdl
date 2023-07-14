@@ -18,7 +18,8 @@
       <td>UserName</td>
       <td>Name</td>
       <td>Email</td>
-      <td>Role</td>
+      <td>Admin User</td>
+      <td>Action</td>
     </tr>
     {% for user in users %}
       <tr>
@@ -27,6 +28,12 @@
         <td>{{ user.first_name }} {{ user.last_name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.is_superuser }}</td>
+        <td>
+          <i class="fas fa-eye" style="margin-right: 5px;"></i>
+          <i class="fa-solid fa-pen" style="margin-right: 5px;"></i>
+          <i class="fas fa-trash-alt"></i>
+          <button id = user.id> <a href="/nodes/user_nodes/{{ user.id }}">view</a></button>
+        </td>
       </tr>
     {% endfor %}
   </table>

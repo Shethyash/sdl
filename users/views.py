@@ -61,6 +61,7 @@ class RegisterView(View):
 
             email = EmailMessage(email_subject, msg,
                                  settings.EMAIL_HOST_USER, to=to_list)
+
             email.fail_silently = True
             email.send()
             messages.success(
