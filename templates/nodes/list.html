@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 {% block title %} Nodes {% endblock title %}
+{% block htmlhead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Nodes/list.css' %}">
+{% endblock htmlhead %}
 {% block content %}
-    <div class="container">
+    <div class="main">
         <div class="row">
             <div class="col-6">
                 <h3>Nodes</h3>
             </div>
             <div class="col-6 text-end">
-                <a href="crud?user_id={{ user_id }}" class="btn btn-primary">
+                <a href="crud?user_id={{ user_id }}" class="btn btnadd">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
         </div>
 
-        <div class="row mt-3">
+        <div class="row mt-0">
             {% for val in data %}
                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="card h-100"
@@ -57,29 +61,30 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <a href="get_feeds_chart/{{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="get_feeds_chart/{{ val.id }}" class="col-3 btn transparent_btn" title="Chart">
                                     <i class="fa fa-line-chart"></i>
                                 </a>
-                                <a href="get_feeds_table/{{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="get_feeds_table/{{ val.id }}" class="col-3 btn transparent_btn" title="Table">
                                     <i class="fa fa-table"></i>
                                 </a>
-                                <a href="export_feeds_csv/{{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="export_feeds_csv/{{ val.id }}" class="col-3 btn transparent_btn" title="Export CSV">
                                     <i class="fa-solid fa-file-csv"></i>
                                 </a>
-                                <a href="crop_image_gallery/{{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="crop_image_gallery/{{ val.id }}" class="col-3 btn transparent_btn" title="Crop Gallery">
                                     <i class="fa-solid fa-image"></i>
-                                </a>
-                                <a href="upload_image/{{ val.id }}" class="col-2 btn transparent_btn">
+                                </a></div>
+                            <div class="row">
+                                <a href="upload_image/{{ val.id }}" class="col-3 btn transparent_btn" title="Upload Crop Image">
                                     <i class="fa-solid fa-upload"></i>
                                 </a>
-                                <a href="crud?id={{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="crud?id={{ val.id }}" class="col-3 btn transparent_btn" title="Edit Node">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
-                                <a href="import-csv/{{ val.id }}" class="col-2 btn transparent_btn">
+                                <a href="import-csv/{{ val.id }}" class="col-3 btn transparent_btn" title="Import CSV">
                                     <i class="fa-solid fa-file-import"></i>
                                 </a>
-                                <a href="delete_node/{{ val.id }}" class="delete col-2 btn transparent_btn"
-                                   data-id={{ val.id }} data-name={{ val.name }}>
+                                <a href="#" class="delete col-3 btn transparent_btn"
+                                   data-id={{ val.id }} data-name={{ val.name }} title="Delete Node">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                                 

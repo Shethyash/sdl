@@ -162,7 +162,11 @@ def export_feeds_csv(request, node_id):
 def node_list(request):
     # print(predict_data(27.378, 88.05571, 18.84202, 0.5522222222222222, 0.0))
     get_gwc(9687.3379)
-    data = Nodes.objects.filter(user_id=request.user.id)
+    # print(request.user.is_superuser, "--")
+    if request.user.is_superuser:
+        data = Nodes.objects.all()
+    else:
+        data = Nodes.objects.filter(user_id=request.user.id)
     date = timezone.now()
     for i in data:
         if (i.last_feed_time is None) or i.last_feed_time is not None and date > i.last_feed_time + datetime.timedelta(

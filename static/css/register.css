@@ -1,0 +1,73 @@
+.mainImg{
+    background-image: linear-gradient(to bottom right, rgba(185, 178, 178, 0.5), rgba(33, 35, 34, 0.7)), url("/static/images/img.png");
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position:fixed;
+    top:0px;
+    left:0px;
+    min-height:100%;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    }
+  .header{
+      justify-content: center;
+    }
+  .row
+  {
+    justify-content: center;
+  }
+  .heading{
+    text-align: center;
+      padding-top: 5%;
+      font-weight: bolder;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+  .card{
+      margin-top: 7%;
+      background-color: rgba(245, 245, 245, 0.4);
+      padding-bottom: 5%;
+      border-radius: 5%;
+      justify-content: center;
+    }
+  label{
+    font-weight: bold;
+    padding-top: 2%;
+  }
+  .btn{
+      background-color: rgb(77, 75, 75);
+    }
+  .btn:hover{
+      background-color: rgb(71, 64, 64);
+    }
+  .signup
+  {
+    background-color: black;
+    color: white;
+    border-radius: 2%;
+    font-weight: bold;
+    margin-top: 3%;
+    width: 100%;
+  }
+  .signup:hover{
+      background-color: rgb(71, 191, 87);
+      color: white;
+  }
+  .signin
+  {
+    color: rgb(2, 2, 74);
+  }
+  .signin:hover
+  {
+    color: rgb(8, 8, 211);
+  }
+  .card-body
+  {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .footer
+  {
+    text-align: center;
+  }

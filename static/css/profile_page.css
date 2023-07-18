@@ -1,0 +1,47 @@
+.main
+{
+    padding: 2% 5%;
+}
+h3
+{
+    font-weight: bold;
+}
+.container
+{
+    padding: 2%;
+    background-color: white;
+    box-shadow: 5px 5px rgb(203, 193, 193);
+    border-radius: 5%;
+}
+label
+{
+    padding-top: 2%;
+    font-weight: bold;
+}
+.btn
+{
+  background-color: black;
+    color: white;
+    border-radius: 2%;
+    font-weight: bold;
+    margin-top: 1%;
+}
+.btn:hover{
+    background-color: rgb(71, 191, 87);
+    color: white;
+  }
+.imgpt
+{
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+.imgp
+{
+    /* margin-top: 1%; */
+    text-align: center;
+}
+.ff
+{
+    padding-right: 5%;
+}

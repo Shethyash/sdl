@@ -1,19 +1,88 @@
 {% extends "base.html" %}
 {% block title %} Import data to node {% endblock title %}
 {% block content %}
-<div class="form-content">
+    <style>
+  .main
+  {
+    padding: 0% 5%;
+  }
+  h3
+  {
+    font-weight: bold;
+  }
+  .header
+  {
+    padding-bottom: 1%;
+  }
+  .form-content
+  {
+    padding: 2%;
+    background-color: white;
+    margin: 2% 1%;
+    box-shadow: 5px 5px rgb(203, 193, 193);
+    border-radius: 5%;
+
+}
+label
+{
+    padding-top: 2%;
+    font-weight: bold;
+}
+.btn
+{
+  background-color: black;
+    color: white;
+    border-radius: 2%;
+    font-weight: bold;
+    margin-top: 1%;
+}
+.btn:hover{
+    background-color: rgb(71, 191, 87);
+    color: white;
+  }
+.upload-container {
+    position: relative;
+}
+.upload-container input {
+    border: 1px solid rgb(71, 191, 87);
+    background: white;
+    outline: 2px dashed rgb(71, 191, 87);
+    outline-offset: -10px;
+    padding: 3%;
+    text-align: center;
+    width: 100%;
+}
+
+.upload-container input:hover {
+    background: rgb(227, 252, 232);
+}
+
+.upload-container:before {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+    content: "(or) Drag and Drop files here. ";
+    color: rgb(71, 191, 87);
+    font-weight: bold;
+}
+</style>
+    <div class="main">
+        <div class="form-content">
+<div class="header"><h3>Import CSV</h3></div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <hr/>
                 <label class="small mb-1">CSV File:</label>
-                {{ form.csv_file }}
+                  <div class="upload-container">
+                      {{ form.csv_file }}
+                  </div>
               </div>
             </div>
           </div>
-        <button type="submit">Upload</button>
+        <button type="submit" class="btn">Upload</button>
     </form>
 </div>
+    </div>
 {% endblock content %}

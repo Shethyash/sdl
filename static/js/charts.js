@@ -39,18 +39,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'Temperature',
                     data: temperature,
-                    // backgroundColor: ['rgba(251, 9, 9, 0.8)',],
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "Temperature",
-                    display: true,
-                    fullSize: true,
-                    font: {size: 20},
-                    color: Chart.defaults.color
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
@@ -69,14 +66,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'Humidity',
                     data: humidity,
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "Humidity",
-                    display: true,
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
@@ -95,14 +93,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'LWS',
                     data: LWS,
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "LWS",
-                    display: true,
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
@@ -121,14 +120,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'Soil Temperature',
                     data: soil_temperature,
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "Soil Temperature",
-                    display: true,
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
@@ -147,14 +147,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'Soil Moisture',
                     data: soil_moisture,
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "Soil Moisture",
-                    display: true,
+                    display: false,
                 },
                 scales: {
                     yAxes: [{
@@ -173,14 +174,15 @@ function get_chart_data(node_id) {
                 datasets: [{
                     label: 'Battery Status',
                     data: battery_status,
-                    borderColor: ['blue',],
-                    borderWidth: 3
+                    backgroundColor: ['rgb(227, 252, 232)',],
+                    borderColor: ['rgb(71, 191, 87)',],
+                    borderWidth: 2
                 }]
             },
             options: {
                 title: {
                     text: "Battery Status",
-                    display: true,
+                    display: false,
                 },
                 scales: {
                     y: {

@@ -6,14 +6,17 @@
     Node Register
   {% endif %}
 {% endblock title %}
+{% block htmlhead %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Nodes/node_register.css' %}">
+{% endblock htmlhead %}
 {% block content %}
-  <div class="form-content my-3">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-7">
-          <div class="card shadow-lg border-0 rounded-lg mt-0 mb-5">
-            <div class="card-header justify-content-center">
-              <h3 class="font-weight-light my-4 text-center">
+  <div class="main">
+      <div class="row">
+        <div class="col-8 ff">
+          <div class="form-content">
+            <div class="header">
+              <h3>
                 {% if node_id %}
                   Edit Node
                 {% else %}
@@ -41,7 +44,6 @@
                 </div>
               {% endif %}
                 <input type="hidden" name="node_id" value="{{ node_id }}">
-                <input type="hidden" name="user_id" value="{{ user_id }}">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -55,9 +57,9 @@
                       <div class="container">
                         <div class="row">
                           {% for radio in form.status %}
-                            <div class="form-check col-6">
+                            <div class="form-check col-6  ">
                               {{ radio.tag }}
-                              <label class="form-check-label" for="{{ radio.id_for_label }}">
+                              <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
                                 {{ radio.choice_label }}
                               </label>
                             </div>
@@ -96,9 +98,9 @@
                       <div class="container">
                         <div class="row">
                           {% for radio in form.thing_speak_fetch %}
-                            <div class="form-check col-6">
+                            <div class="form-check col-6 ">
                               {{ radio.tag }}
-                              <label class="form-check-label" for="{{ radio.id_for_label }}">
+                              <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
                                 {{ radio.choice_label }}
                               </label>
                             </div>
@@ -129,7 +131,7 @@
                   </div>
                 </div>
                 <div class="form-group mt-4 mb-0">
-                  <button type="submit" class="col-md-12 btn btn-dark">
+                  <button type="submit" class="col-md-1 btn">
                     Save
                   </button
                   >
@@ -140,7 +142,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 {% endblock content %}
 {% block script %}
