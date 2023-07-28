@@ -6,10 +6,8 @@
 {% endblock htmlhead %}
 {% block content %}
 <div class="mainImg">
-    <div class="container">
-      <div class="row justify-content-center">
-      <div class="col-5">
-      <div class="card">
+  <div class="main-flex">
+    <div class="flex-container">
             <div class="header">
               <h3 class="heading">SignIn</h3>
             </div>
@@ -20,9 +18,9 @@
                     <strong>{{ value }}</strong>
                   {% endfor %}
                 </div>
-              </div>
+            </div>
             {% endif %}
-            <div class="card-body">
+            <div class="form-body">
               <form method="POST">
                 {% csrf_token %}
                 <div class="form-row">
@@ -65,7 +63,7 @@
                 </div>
                 <div class="form-row">
 
-                    <div class="form-group mt-0 mb-1">
+                    <div class="form-group">
                       <button
                           name="login"
                           class="btn login"
@@ -85,9 +83,7 @@
                 <a href="{% url 'password_reset' %}" class="fp"><i>Forgot Password?</i></a>
               </div>
             </div>
-</div>
-</div>
-</div>
-</div>
+    </div>
+  </div>
 </div>
 {% endblock content %}

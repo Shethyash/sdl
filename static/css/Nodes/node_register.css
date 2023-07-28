@@ -9,7 +9,6 @@ h3
 .header
 {
   padding-bottom: 1%;
-  padding-left: 1%;
 }
 .ff{
     display: flex;
@@ -35,7 +34,7 @@ background-color: black;
   color: white;
   border-radius: 2%;
   font-weight: bold;
-  margin: 2% 1%;
+  margin-top: 2%;
 }
 .btn:hover{
   background-color: rgb(71, 191, 87);
@@ -49,4 +48,37 @@ span :first-child{
     top:10px;
     left: 0;
 
+}
+.flex-container
+{
+  display: flex;
+}
+.flex-container .form-group
+{
+  flex: 50%;
+  padding-right: 1%;
+}
+.inner-container
+{
+  display: flex;
+}
+@media (max-width: 600px)
+{
+  .header
+  {
+    padding-bottom: 1%;
+    margin-top: 3%;
+  }
+  .form-content
+  {
+    box-shadow: none;    
+  }
+  .btn
+  {
+    margin-top: 3%;
+  }
+  .flex-container
+  {
+    flex-direction: column;
+  }
 }

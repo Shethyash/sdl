@@ -12,8 +12,7 @@
 {% endblock htmlhead %}
 {% block content %}
   <div class="main">
-      <div class="row">
-        <div class="col-8 ff">
+      <div class="main-conatiner">
           <div class="form-content">
             <div class="header">
               <h3>
@@ -24,7 +23,7 @@
                 {% endif %}
               </h3>
             </div>
-            <div class="card-body">
+            <div class="form-body">
               <form method="POST">
                 {% csrf_token %} {% if form.errors %}
                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -44,94 +43,70 @@
                 </div>
               {% endif %}
                 <input type="hidden" name="node_id" value="{{ node_id }}">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Name</label>
-                      {{ form.name }}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Status</label>
-                      <div class="container">
-                        <div class="row">
-                          {% for radio in form.status %}
-                            <div class="form-check col-6  ">
-                              {{ radio.tag }}
-                              <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
-                                {{ radio.choice_label }}
-                              </label>
-                            </div>
-                          {% endfor %}
+                    <div class="flex-container">
+                      <div class="form-group">
+                        <label>Name</label>
+                        {{ form.name }}
+                      </div>
+                      <div class="form-group">
+                        <label>Status</label>
+                        <div class="inner-container">
+                            {% for radio in form.status %}
+                              <div class="form-check col-6">
+                                {{ radio.tag }}
+                                <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
+                                  {{ radio.choice_label }}
+                                </label>
+                              </div>
+                            {% endfor %}
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Latitude</label>
-                      {{ form.latitude }}
+                    <div class="flex-container">
+                      <div class="form-group">
+                        <label>Latitude</label>
+                        {{ form.latitude }}
+                      </div>
+                      <div class="form-group">
+                        <label>longitude</label>
+                        {{ form.longitude }}
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
                     <div class="form-group">
-                      <label class="small mb-1">longitude</label>
-                      {{ form.longitude }}
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="small mb-1">Description</label>
+                      <label>Description</label>
                       {{ form.description }}
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Fetch from Thing Speak</label>
-                      <div class="container">
-                        <div class="row">
-                          {% for radio in form.thing_speak_fetch %}
-                            <div class="form-check col-6 ">
-                              {{ radio.tag }}
-                              <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
-                                {{ radio.choice_label }}
-                              </label>
-                            </div>
-                          {% endfor %}
+                    <div class="flex-container">
+                      <div class="form-group">
+                        <label>Fetch from Thing Speak</label>
+                        <div class="inner-container">
+                            {% for radio in form.thing_speak_fetch %}
+                              <div class="form-check col-6 ">
+                                {{ radio.tag }}
+                                <label class="form-check-label p-0" for="{{ radio.id_for_label }}">
+                                  {{ radio.choice_label }}
+                                </label>
+                              </div>
+                            {% endfor %}
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label>Channel Id</label>
+                        {{ form.channel_id }}
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Channel Id</label>
-                      {{ form.channel_id }}
+                    <div class="flex-container">
+                      <div class="form-group">
+                        <label class="small mb-1">Use Api key: </label>
+                        {{ form.user_api_key }}
+                      </div>
+                      <div class="form-group">
+                        <label class="small mb-1">Node Api key:</label>
+                        {{ form.node_api_key }}
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Use Api key: </label>
-                      {{ form.user_api_key }}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="small mb-1">Node Api key:</label>
-                      {{ form.node_api_key }}
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group mt-4 mb-0">
-                  <button type="submit" class="col-md-1 btn">
+                <div class="form-group">
+                  <button type="submit" class="btn">
                     Save
                   </button
                   >
@@ -139,7 +114,6 @@
                 </div>
               </form>
             </div>
-          </div>
         </div>
       </div>
   </div>

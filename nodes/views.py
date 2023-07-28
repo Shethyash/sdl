@@ -284,8 +284,9 @@ def delete_node(request, node_id):
 
 @login_required
 def get_chart_data(request, node_id):
-    data = Feeds.objects.filter(node_id=node_id)
-    res = serializers.serialize('json', data)
+    data = Feeds.objects.filter(node_id=node_id).order_by('-id')
+    data1 = data[:200]
+    res = serializers.serialize('json', data1)
     return HttpResponse(res, content_type="application/json")
 
 
@@ -373,9 +374,10 @@ def import_csv(request, node_id):
 
         csv_file = request.FILES['csv_file']
         df = pd.read_csv(csv_file)
+        df.replace('INF', 0, inplace=True)
+        df.drop(['entry_id','latitude','longitude','elevation','status'],axis=1,errors='ignore',inplace=True)
 
-        header_set = set(['temperature', 'humidity', 'LWS', 'soil_temperature',
-                         'soil_moisture', 'battery_status', 'created_at'])
+        header_set = set(['created_at','temperature','humidity','soil_temperature','LWS','soil_moisture','battery_status'])
 
         # check if csv file has exactly same columns headers
         if not set(df.columns) == header_set:

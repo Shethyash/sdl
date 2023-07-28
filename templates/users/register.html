@@ -6,14 +6,12 @@
 {% endblock htmlhead %}
 {% block content %}
 <div class="mainImg">
-    <div class="container">
-      <div class="row">
-        <div class="col-5">
-          <div class="card">
+    <div class="main-container">
+          <div class="flex-container">
             <div class="header">
               <h3 class="heading">Create Account</h3>
             </div>
-            <div class="card-body">
+            <div class="form-body">
               <form method="POST">
                 {% csrf_token %} {% if form.errors %}
                 <div class="text-danger" role="alert">
@@ -82,8 +80,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   </div>
 {% endblock content %}

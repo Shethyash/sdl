@@ -3,7 +3,8 @@
     height: 100%;
     width: 100%;
     background-size: cover;
-    position:fixed;
+    position: fixed;
+    background-position: center;
     /* top:0px;
     left:0px; */
   }
@@ -15,11 +16,12 @@
     font-size: 3vh;
     font-weight: 100;
     color: white;
+    text-align: justify;
   }
 .jumbotron{
         padding-top: 200px;
         padding-left: 100px;
-        width: 70%;
+        width: 90%;
         /* border: 3px solid green; */
   }
 .btn{
@@ -30,3 +32,21 @@
     background-color: rgb(71, 191, 87); 
     border: 0;
   }
+
+@media (max-width: 600px)
+{
+  .display-4{
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .lead{
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: white;
+  }
+  .jumbotron{
+    padding-top: 50px;
+    padding-left: 30px;
+    /* border: 3px solid green; */
+}
+}

@@ -9,8 +9,8 @@
         <h3>{{ node.name }}</h3>
   <div class="row">
     {% for val in data %}
-      <div class="col-4">
-        <div class="card">
+      <div class="col-12 col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
           <div class=" card-body" style="padding: 3%">
             <h5 class="card-title" style="padding-bottom: 2%">{{ val.created_at|date:"d/m/Y H:m:s" }}
               <span class="float-end">

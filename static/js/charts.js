@@ -1,9 +1,15 @@
-function get_chart_data(node_id) {
+console.log('fasdfsafd')
+async function get_chart_data(node_id) {
     const base_url = window.location.origin;
 
+    console.log('fasdfsafd')
+
+    const res = await fetch(base_url + "/nodes/get_chart/" + node_id)
+    const data = await res.json()
+    console.log(data)
     // ajax call
     $.get(base_url + "/nodes/get_chart/" + node_id, function (data) {
-        // console.log(data);
+        console.log(data);
 
         const x_label = [];
         const temperature = [];
@@ -22,6 +28,8 @@ function get_chart_data(node_id) {
             soil_moisture.push(data[key].fields.soil_moisture);
             battery_status.push(data[key].fields.battery_status);
         }
+
+        console.log(LWS)
 
         // console.log(x_label, temperature, humidity, LWS, soil_temperature, soil_moisture, battery_status);
 

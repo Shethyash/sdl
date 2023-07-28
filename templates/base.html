@@ -55,51 +55,55 @@
 </head>
 <body>
         <div>
-            <div class="col-md-12">
-                <nav
-                        class="navbar navbar-expand-md navbar-light px-2"
-                >
-                    <a class="navbar-brand" href="/">
-                        <img
-                                src="{% static '/images/brand_logo.png' %}"
-                                width="200" height="35" class="d-inline-block align-top mt-2"
-                                alt="">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNavAltMarkup"
-                            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
-                            style="margin-right: 1rem;">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <nav class="navbar">
+                    <ul>
+                                <li class="navbar-logo" style="padding: 0;"><a href="/">
+                                    <img
+                                            src="{% static '/images/brand_logo.png' %}"
+                                            width="200" height="30"
+                                            alt="">
+                                </a></li>
+                        <li class="navbar-toggle"><i class="fas fa-bars" style="color:rgb(71, 191, 87); font-size:28px;"></i></li>
+                        <script>
+                            const toggleButton = document.getElementsByClassName('navbar-toggle')[0];
+                            const navbarLinks = document.getElementsByClassName('navbar-links');
+                            toggleButton.addEventListener('click', function(){
+                                for(var i=0; i<navbarLinks.length;i++)
+                                {
+                                    navbarLinks[i].classList.toggle('active');
+                                }
+                            });
+                        </script>
                             {% if user.is_superuser %}
-                                <li class="nav-item">
-                                    <a href="/get_all_users" class="nav-item nav-link" style="color: rgb(71, 191, 87); font-weight: bolder;">Users</a>
+                                <li class="navbar-links">
+                                    <a href="/get_all_users" style="color: rgb(71, 191, 87); font-weight: bolder;">Users</a>
                                 </li>
                             {% endif %}
                             {# {% if user.is_authenticated and not user.is_superuser %}#}
                             {% if user.is_authenticated %}
-                                <li class="nav-item">
-                                    <a href="/nodes" class="nav-item nav-link" style="color: rgb(71, 191, 87); font-weight: bold;">Nodes</a>
+                                <li class="navbar-links">
+                                    <a href="/nodes" style="color: rgb(71, 191, 87); font-weight: bold;">Nodes</a>
                                 </li>
                             {% endif %}
-                        </ul>
-                        <div class="navbar-nav">
+                        
                             {% if user.is_authenticated %}
-                                <a href="{% url 'users-profile' %}" class="nav-item nav-link" style="color:rgb(71, 191, 87); font-weight: bold;">
+                            <li class="navbar-links">
+                                <a href="{% url 'users-profile' %}" style="color:rgb(71, 191, 87); font-weight: bold;">
                                     {#                <i class="fa-solid fa-address-card"></i>#}
                                     Profile
                                 </a>
-                                <a href="{% url 'logout' %}" class="nav-item nav-link" style="color: rgb(71, 191, 87); font-weight: bold;">
-                                     logout
+                            </li>
+                            <li class="navbar-links">
+                                <a href="{% url 'logout' %}" style="color: rgb(71, 191, 87); font-weight: bold;">
+                                    <!-- <i class="fa-solid fa-right-from-bracket" title="Log Out"></i> -->
+                                    Logout
                                 </a>
+                            </li>
                             {% else %}
                                 <!-- <a href="{% url 'login' %}" class="nav-item nav-link">Sign in</a> -->
                             {% endif %}
-                        </div>
+                        </ul>
                     </div>
-
                 </nav>
                 <!--Any flash messages pop up in any page because this is the base template-->
                 {% if messages %}
@@ -116,7 +120,6 @@
                         </button>
                     </div>
                 {% endif %}
-            </div>
         </div>
     <div class="mainContent">
         {% block content %}{% endblock %}
@@ -134,5 +137,7 @@
 {% block script %}{% endblock %}
 <!-- A plugin for password show/hide  -->
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+<!--csv parser-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

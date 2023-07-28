@@ -1,10 +1,28 @@
 .mainImg{
-  background-image: linear-gradient(to bottom right, rgba(185, 178, 178, 0.5), rgba(33, 35, 34, 0.7)), url("/static/static/images/bg1.webp");
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  position:fixed;
+    background-image: linear-gradient(to bottom right, rgba(185, 178, 178, 0.5), rgba(33, 35, 34, 0.7)), url("/static/images/img.png");
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+    background-position: center;
+    /* top:0px;
+    left:0px; */
   }
+.main-flex
+{
+  display: flex;
+  justify-content:center;
+}
+.flex-container
+{
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(245, 245, 245, 0.4);
+  border-radius: 5%;
+  padding: 1% 4%;
+  flex: 0.25;
+  margin-top: 10%;
+}
 .header{
     justify-content: center;
   }
@@ -13,12 +31,6 @@
     padding-top: 5%;
     font-weight: bolder;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-  }
-.card{
-    margin-top: 25%;
-    background-color: rgba(245, 245, 245, 0.4);
-    padding-bottom: 5%;
-    border-radius: 5%;
   }
 .un{
   font-weight: bold;
@@ -71,3 +83,12 @@
     padding-left: 10%;
     padding-right: 10%;
   }
+
+@media (max-width: 600px)
+{
+  .flex-container
+  {
+    padding: 5%; 
+    flex: 0.75;
+  }
+}
